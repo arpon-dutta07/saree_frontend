@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Hero from "@/components/hero/Hero";
 import VideoLoader from "@/components/loader/VideoLoader";
 import NewArrivalsSection from "@/components/new-arrivals/NewArrivalsSection";
+import HeritageSection from "@/components/heritage/HeritageSection";
 
 export default function Home() {
   const [hasCompletedIntro, setHasCompletedIntro] = useState(false);
@@ -13,6 +14,7 @@ export default function Home() {
       <VideoLoader onComplete={() => setHasCompletedIntro(true)} />
       <Hero startAnimation={hasCompletedIntro} />
       <NewArrivalsSection />
+      <HeritageSection />
     </main>
   );
 }

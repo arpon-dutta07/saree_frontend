@@ -1,22 +1,44 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 /* ────────────────────────────────────────────────────────────────────────
-   Luxury Saree Atelier — Split-Screen Contact Section
-   Recreating the cinematic split-panel reveal & pointer parallax effect
+   Aarohi Haute Couture — Regal Split-Screen Atelier & Concierge Section
+   Duo-split editorial layout featuring Private Styling & Flagship Concierge,
+   textured offwhite parchment background, scroll-triggered reveal,
+   and central booking medallion seal.
    ──────────────────────────────────────────────────────────────────────── */
 
 const LEFT_IMAGE = "/all saree/Candlelit Heritage Saree Portrait.png";
 const RIGHT_IMAGE = "/all saree/Golden-Hour Lavender Courtyard Portrait.png";
-const CARD_IMAGE = "/all saree/Emerald Saree in a Heritage Courtyard.png";
 const FALLBACK_IMAGE = "/all saree/Serene Saree Portrait Among Bougainvillea.png";
 
 export default function ContactSplitSection() {
   const rootRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef<number | null>(null);
+  const [isInView, setIsInView] = useState(false);
   const [activeLang, setActiveLang] = useState<"EN" | "IN">("EN");
 
+  // Trigger entrance animations when user scrolls into view
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.18 }
+    );
+
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
+  // Smooth pointer-based parallax for portrait cards
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     const root = rootRef.current;
     if (!root) return;
@@ -68,26 +90,24 @@ export default function ContactSplitSection() {
     <main
       id="contact"
       ref={rootRef}
-      className="va-root"
+      className={`va-root ${isInView ? "va-active" : ""}`}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
     >
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap");
-
             .va-root {
               --mouse-x: 0;
               --mouse-y: 0;
               position: relative;
               width: 100%;
               height: 100svh;
-              min-height: 620px;
+              min-height: 640px;
               overflow: hidden;
-              background: #140306;
-              color: #fffaf3;
-              font-family: 'Manrope', Arial, sans-serif;
+              background: #FBF7F0;
+              color: #1E0409;
+              font-family: var(--font-inter), 'Inter', sans-serif;
               isolation: isolate;
               user-select: none;
             }
@@ -106,152 +126,14 @@ export default function ContactSplitSection() {
               color: inherit;
             }
 
-            /* ── Split-Screen Structure ─────────────────────────────────── */
-            .va-panels {
+            /* ── Base Textured Offwhite Backdrop ────────────────────────── */
+            .va-bg-parchment {
               position: absolute;
               inset: 0;
-              display: grid;
-              grid-template-columns: 50% 50%;
-            }
-
-            .va-panel {
-              position: relative;
-              min-width: 0;
-              height: 100%;
-              overflow: hidden;
-              background: #1e050b;
-            }
-
-            /* ── Left Panel Reveal ──────────────────────────────────────── */
-            .va-panel-left {
-              clip-path: inset(0 100% 0 0);
-              animation: va-reveal-left 1.3s cubic-bezier(0.77, 0, 0.18, 1) 80ms forwards;
-            }
-
-            @keyframes va-reveal-left {
-              to {
-                clip-path: inset(0 0 0 0);
-              }
-            }
-
-            /* ── Right Panel Reveal ─────────────────────────────────────── */
-            .va-panel-right {
-              clip-path: inset(0 0 0 100%);
-              animation: va-reveal-right 1.3s cubic-bezier(0.77, 0, 0.18, 1) 80ms forwards;
-            }
-
-            @keyframes va-reveal-right {
-              to {
-                clip-path: inset(0 0 0 0);
-              }
-            }
-
-            /* ── Panel Images with Pointer Parallax ────────────────────── */
-            .va-panel-image {
               width: 100%;
               height: 100%;
-              display: block;
-              object-fit: cover;
-              will-change: transform;
-            }
-
-            .va-panel-left .va-panel-image {
-              object-position: 54% 50%;
-              transform: translate3d(calc(var(--mouse-x) * -8px), calc(var(--mouse-y) * -6px), 0) scale(1.065);
-              animation: va-image-left 1.8s cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
-            }
-
-            @keyframes va-image-left {
-              from {
-                filter: blur(8px);
-                transform: translate3d(calc(var(--mouse-x) * -8px), calc(var(--mouse-y) * -6px), 0) scale(1.16);
-              }
-              to {
-                filter: blur(0);
-                transform: translate3d(calc(var(--mouse-x) * -8px), calc(var(--mouse-y) * -6px), 0) scale(1.065);
-              }
-            }
-
-            .va-panel-right .va-panel-image {
-              object-position: 44% 50%;
-              transform: translate3d(calc(var(--mouse-x) * 9px), calc(var(--mouse-y) * 7px), 0) scale(1.06);
-              animation: va-image-right 1.8s cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
-            }
-
-            @keyframes va-image-right {
-              from {
-                filter: blur(8px);
-                transform: translate3d(calc(var(--mouse-x) * 9px), calc(var(--mouse-y) * 7px), 0) scale(1.15);
-              }
-              to {
-                filter: blur(0);
-                transform: translate3d(calc(var(--mouse-x) * 9px), calc(var(--mouse-y) * 7px), 0) scale(1.06);
-              }
-            }
-
-            /* ── Left Image Overlays ────────────────────────────────────── */
-            .va-panel-left::after {
-              content: "";
-              position: absolute;
-              inset: 0;
-              z-index: 2;
               pointer-events: none;
-              background:
-                linear-gradient(
-                  90deg,
-                  rgba(20, 3, 6, 0.44) 0%,
-                  rgba(20, 3, 6, 0.08) 46%,
-                  rgba(20, 3, 6, 0.35) 100%
-                ),
-                linear-gradient(
-                  180deg,
-                  rgba(15, 2, 5, 0.38) 0%,
-                  transparent 26%,
-                  transparent 65%,
-                  rgba(15, 2, 5, 0.42) 100%
-                );
-            }
-
-            /* ── Right Image Overlays ───────────────────────────────────── */
-            .va-panel-right::after {
-              content: "";
-              position: absolute;
-              inset: 0;
-              z-index: 2;
-              pointer-events: none;
-              background:
-                linear-gradient(
-                  90deg,
-                  rgba(26, 4, 8, 0.28) 0%,
-                  transparent 36%,
-                  rgba(29, 4, 9, 0.22) 100%
-                ),
-                linear-gradient(
-                  180deg,
-                  rgba(20, 3, 6, 0.28) 0%,
-                  transparent 52%,
-                  rgba(18, 3, 6, 0.45) 100%
-                );
-            }
-
-            /* ── Center Divider Line ────────────────────────────────────── */
-            .va-center-line {
-              position: absolute;
-              top: 0;
-              bottom: 0;
-              left: 50%;
-              z-index: 7;
-              width: 1px;
-              background: rgba(255, 248, 236, 0.18);
-              transform: scaleY(0);
-              transform-origin: top;
-              animation: va-scale-line 1.2s cubic-bezier(0.16, 1, 0.3, 1) 700ms forwards;
-            }
-
-            @keyframes va-scale-line {
-              to {
-                transform: scaleY(1);
-              }
+              z-index: 0;
             }
 
             /* ── Top Navigation Bar ─────────────────────────────────────── */
@@ -260,52 +142,54 @@ export default function ContactSplitSection() {
               top: 0;
               left: 0;
               right: 0;
-              z-index: 20;
-              height: clamp(82px, 10vh, 112px);
+              z-index: 30;
+              height: clamp(80px, 10vh, 106px);
               display: grid;
               grid-template-columns: 1fr auto 1fr;
-              align-items: start;
+              align-items: center;
               pointer-events: none;
-              padding: clamp(24px, 3.3vh, 38px) clamp(22px, 2.5vw, 42px) 0;
+              padding: 0 clamp(24px, 3.5vw, 52px);
             }
 
             .va-nav-link {
               width: fit-content;
               position: relative;
-              color: rgba(255, 250, 242, 0.95);
-              font-size: clamp(10px, 0.86vw, 14px);
-              font-weight: 500;
+              color: #1E0409;
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              font-size: clamp(10px, 0.82vw, 13px);
+              font-weight: 600;
               line-height: 1;
-              letter-spacing: 0.2em;
+              letter-spacing: 0.28em;
               text-transform: uppercase;
               pointer-events: auto;
+              transition: color 280ms ease;
               opacity: 0;
-              transform: translateY(-12px);
-              animation: va-nav-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 770ms forwards;
+              transform: translateY(-10px);
+            }
+
+            .va-active .va-nav-link {
+              animation: va-fade-down 800ms cubic-bezier(0.16, 1, 0.3, 1) 300ms forwards;
+            }
+
+            .va-nav-link:hover {
+              color: #8B1E3F;
             }
 
             .va-nav-right {
               justify-self: end;
             }
 
-            @keyframes va-nav-in {
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-
             .va-nav-link::after {
               content: "";
               position: absolute;
               left: 0;
-              bottom: -7px;
+              bottom: -6px;
               width: 100%;
-              height: 1px;
-              background: currentColor;
+              height: 1.5px;
+              background: #8B1E3F;
               transform: scaleX(0);
               transform-origin: right;
-              transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+              transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
             }
 
             .va-nav-link:hover::after {
@@ -313,19 +197,21 @@ export default function ContactSplitSection() {
               transform-origin: left;
             }
 
-            /* ── Brand Monogram Seal & Title ────────────────────────────── */
+            /* ── Brand Monogram Seal & Name ─────────────────────────────── */
             .va-brand {
-              position: relative;
-              top: -6px;
               justify-self: center;
               display: flex;
               flex-direction: column;
               align-items: center;
-              color: #f5e8d2;
+              color: #1E0409;
               pointer-events: auto;
               opacity: 0;
-              transform: translateY(-16px);
-              animation: va-brand-in 900ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+              transform: translateY(-14px);
+              transition: transform 300ms ease;
+            }
+
+            .va-active .va-brand {
+              animation: va-brand-in 900ms cubic-bezier(0.16, 1, 0.3, 1) 450ms forwards;
             }
 
             @keyframes va-brand-in {
@@ -335,259 +221,465 @@ export default function ContactSplitSection() {
               }
             }
 
-            .va-mark {
-              position: relative;
-              width: 43px;
-              height: 50px;
-              margin-bottom: 1px;
-            }
-
-            .va-mark::before,
-            .va-mark::after {
-              content: "";
-              position: absolute;
-              border: 2px solid currentColor;
-            }
-
-            .va-mark::before {
-              left: 11px;
-              top: 1px;
-              width: 20px;
-              height: 36px;
-              border-radius: 100% 0 100% 100%;
-              transform: rotate(38deg);
-            }
-
-            .va-mark::after {
-              left: 8px;
-              top: 19px;
-              width: 27px;
-              height: 21px;
-              border-top: 0;
-              border-radius: 0 0 18px 18px;
-              transform: rotate(13deg);
-            }
-
-            .va-brand-name {
-              font-family: 'DM Sans', Arial, sans-serif;
-              font-size: clamp(22px, 2.1vw, 34px);
-              font-weight: 500;
-              line-height: 0.9;
-              letter-spacing: -0.045em;
-            }
-
-            .va-brand-subtitle {
-              margin-top: 9px;
-              font-size: clamp(6px, 0.52vw, 9px);
-              font-weight: 500;
-              line-height: 1;
-              letter-spacing: 0.55em;
-              text-transform: uppercase;
-            }
-
-            /* ── Large Panel Titles ─────────────────────────────────────── */
-            .va-title {
-              position: absolute;
-              z-index: 8;
-              margin: 0;
-              color: rgba(255, 252, 246, 0.96);
-              font-family: 'DM Sans', Arial, sans-serif;
-              font-size: clamp(42px, 4.2vw, 70px);
-              font-weight: 300;
-              line-height: 1;
-              letter-spacing: -0.055em;
-              white-space: nowrap;
-              opacity: 0;
-              transform: translateY(30px);
-              animation: va-title-in 1s cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
-              pointer-events: none;
-            }
-
-            @keyframes va-title-in {
+            @keyframes va-fade-down {
               to {
                 opacity: 1;
                 transform: translateY(0);
               }
             }
 
-            .va-title-left {
-              top: 17%;
-              left: 30.5%;
+            .va-seal-wrap {
+              width: clamp(34px, 2.7vw, 42px);
+              height: clamp(34px, 2.7vw, 42px);
+              border-radius: 50%;
+              background: #FAF6F0;
+              border: 1px solid rgba(212, 175, 55, 0.45);
+              box-shadow: 0 4px 16px rgba(30, 4, 9, 0.1);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 5px;
+              transition: transform 300ms ease, box-shadow 300ms ease;
             }
 
-            .va-title-right {
-              left: 30%;
-              bottom: 15.7%;
+            .va-brand:hover .va-seal-wrap {
+              transform: scale(1.08);
+              box-shadow: 0 6px 20px rgba(30, 4, 9, 0.16);
             }
 
-            /* ── Center Floating Card Area ──────────────────────────────── */
-            .va-card-area {
+            .va-seal-img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              display: block;
+            }
+
+            .va-brand-name {
+              font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+              font-size: clamp(20px, 1.7vw, 26px);
+              font-weight: 600;
+              line-height: 1;
+              letter-spacing: 0.08em;
+              color: #1E0409;
+              margin-top: 5px;
+            }
+
+            .va-brand-subtitle {
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              margin-top: 3px;
+              font-size: clamp(6px, 0.46vw, 7.5px);
+              font-weight: 600;
+              line-height: 1;
+              letter-spacing: 0.42em;
+              text-transform: uppercase;
+              color: #8B1E3F;
+            }
+
+            /* ── Split-Screen Panels ────────────────────────────────────── */
+            .va-panels {
               position: absolute;
-              left: 50%;
-              top: 50.7%;
-              z-index: 15;
-              width: clamp(190px, 16.2vw, 270px);
-              transform: translate(-50%, -50%);
+              inset: 0;
+              display: grid;
+              grid-template-columns: 50% 50%;
+              z-index: 2;
+              pointer-events: none;
+            }
+
+            .va-panel {
+              position: relative;
+              min-width: 0;
+              height: 100%;
               display: flex;
               flex-direction: column;
               align-items: center;
-              cursor: pointer;
+              justify-content: center;
+              padding: clamp(84px, 11vh, 108px) clamp(24px, 3.5vw, 60px) clamp(55px, 8vh, 72px);
+              pointer-events: auto;
             }
 
-            .va-card-wrap {
-              position: relative;
-              width: 100%;
-              aspect-ratio: 1 / 1.05;
-              overflow: hidden;
-              border-radius: clamp(24px, 2.2vw, 38px);
-              background: #4a101d;
-              box-shadow:
-                0 26px 70px rgba(19, 3, 6, 0.45),
-                0 5px 18px rgba(19, 3, 6, 0.3);
-              opacity: 0;
-              transform: translateY(55px) scale(0.88);
-              animation: va-card-in 1.15s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+            /* ── Left Panel (Atelier / Private Styling) ─────────────────── */
+            .va-panel-left {
+              clip-path: inset(0 100% 0 0);
             }
 
-            @keyframes va-card-in {
+            .va-active .va-panel-left {
+              animation: va-reveal-left 1.3s cubic-bezier(0.77, 0, 0.18, 1) 120ms forwards;
+            }
+
+            @keyframes va-reveal-left {
               to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
+                clip-path: inset(0 0 0 0);
               }
             }
 
-            .va-card-wrap::after {
+            /* ── Right Panel (Concierge / Inquiries) ─────────────────────── */
+            .va-panel-right {
+              clip-path: inset(0 0 0 100%);
+            }
+
+            .va-active .va-panel-right {
+              animation: va-reveal-right 1.3s cubic-bezier(0.77, 0, 0.18, 1) 120ms forwards;
+            }
+
+            @keyframes va-reveal-right {
+              to {
+                clip-path: inset(0 0 0 0);
+              }
+            }
+
+            /* ── Panel Editorial Header ─────────────────────────────────── */
+            .va-panel-header {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              text-align: center;
+              margin-bottom: clamp(10px, 1.4vh, 16px);
+              opacity: 0;
+              transform: translateY(18px);
+            }
+
+            .va-active .va-panel-header {
+              animation: va-fade-up 900ms cubic-bezier(0.16, 1, 0.3, 1) 600ms forwards;
+            }
+
+            @keyframes va-fade-up {
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+
+            .va-panel-tag {
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              font-size: clamp(8px, 0.65vw, 9.5px);
+              font-weight: 600;
+              letter-spacing: 0.32em;
+              text-transform: uppercase;
+              color: #8B1E3F;
+              margin-bottom: 3px;
+            }
+
+            .va-panel-title {
+              margin: 0;
+              font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+              font-size: clamp(28px, 2.7vw, 42px);
+              font-weight: 500;
+              line-height: 1.05;
+              letter-spacing: 0.02em;
+              color: #1E0409;
+            }
+
+            .va-title-italic {
+              font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+              font-style: italic;
+              font-weight: 400;
+              color: #8B1E3F;
+            }
+
+            /* ── Framed Portrait Saree Panels ───────────────────────────── */
+            .va-portrait-frame {
+              position: relative;
+              width: clamp(280px, 23vw, 390px);
+              aspect-ratio: 1 / 1.25;
+              border-radius: clamp(18px, 1.8vw, 28px);
+              overflow: hidden;
+              background: #F4ECE1;
+              border: 1.5px solid rgba(212, 175, 55, 0.4);
+              box-shadow:
+                0 20px 50px rgba(30, 4, 9, 0.14),
+                0 4px 14px rgba(30, 4, 9, 0.06);
+              pointer-events: auto;
+              will-change: transform;
+              cursor: pointer;
+              transition: border-color 400ms ease, box-shadow 400ms ease;
+            }
+
+            .va-portrait-frame:hover {
+              border-color: rgba(212, 175, 55, 0.7);
+              box-shadow:
+                0 26px 60px rgba(30, 4, 9, 0.18),
+                0 6px 18px rgba(30, 4, 9, 0.09);
+            }
+
+            .va-portrait-frame::after {
               content: "";
               position: absolute;
               inset: 0;
-              z-index: 2;
               border-radius: inherit;
               pointer-events: none;
               background: linear-gradient(
-                130deg,
-                rgba(255, 255, 255, 0.16),
-                transparent 38%,
-                rgba(46, 5, 12, 0.15)
+                180deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                transparent 45%,
+                rgba(30, 4, 9, 0.18) 100%
               );
+              transition: opacity 400ms ease;
             }
 
-            .va-card-image {
+            .va-portrait-frame:hover::after {
+              opacity: 0.7;
+            }
+
+            .va-panel-image {
               width: 100%;
               height: 100%;
               display: block;
               object-fit: cover;
-              object-position: center 35%;
-              transform: scale(1.02);
-              transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+              object-position: center 25%;
+              transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
             }
 
-            .va-card-area:hover .va-card-image {
-              transform: scale(1.095);
+            .va-portrait-frame:hover .va-panel-image {
+              transform: scale(1.05);
             }
 
-            .va-explore {
-              width: fit-content;
-              margin: 14px auto 0;
-              display: flex;
+            .va-panel-left .va-portrait-frame {
+              transform: translate3d(calc(var(--mouse-x) * -7px), calc(var(--mouse-y) * -5px), 0);
+              opacity: 0;
+            }
+
+            .va-active .va-panel-left .va-portrait-frame {
+              animation: va-image-left 1.6s cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+            }
+
+            @keyframes va-image-left {
+              from {
+                filter: blur(6px);
+                opacity: 0;
+                transform: translate3d(calc(var(--mouse-x) * -7px), calc(var(--mouse-y) * -5px), 0) scale(1.06);
+              }
+              to {
+                filter: blur(0);
+                opacity: 1;
+                transform: translate3d(calc(var(--mouse-x) * -7px), calc(var(--mouse-y) * -5px), 0) scale(1);
+              }
+            }
+
+            .va-panel-right .va-portrait-frame {
+              transform: translate3d(calc(var(--mouse-x) * 7px), calc(var(--mouse-y) * 5px), 0);
+              opacity: 0;
+            }
+
+            .va-active .va-panel-right .va-portrait-frame {
+              animation: va-image-right 1.6s cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+            }
+
+            @keyframes va-image-right {
+              from {
+                filter: blur(6px);
+                opacity: 0;
+                transform: translate3d(calc(var(--mouse-x) * 7px), calc(var(--mouse-y) * 5px), 0) scale(1.06);
+              }
+              to {
+                filter: blur(0);
+                opacity: 1;
+                transform: translate3d(calc(var(--mouse-x) * 7px), calc(var(--mouse-y) * 5px), 0) scale(1);
+              }
+            }
+
+            /* ── Panel Action Link ──────────────────────────────────────── */
+            .va-panel-action {
+              display: inline-flex;
               align-items: center;
-              gap: 5px;
-              color: rgba(255, 252, 247, 0.96);
-              font-size: clamp(12px, 1.22vw, 20px);
-              font-weight: 400;
-              line-height: 1;
+              gap: 6px;
+              margin-top: clamp(10px, 1.4vh, 16px);
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              font-size: clamp(9px, 0.72vw, 11px);
+              font-weight: 600;
               letter-spacing: 0.22em;
               text-transform: uppercase;
-              opacity: 0;
-              transform: translateY(16px);
-              animation: va-explore-in 850ms cubic-bezier(0.16, 1, 0.3, 1) 1.45s forwards;
-            }
-
-            @keyframes va-explore-in {
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-
-            .va-explore-arrow {
-              font-size: 0.72em;
-              display: inline-block;
-              transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
-            }
-
-            .va-card-area:hover .va-explore-arrow {
-              transform: translate(4px, -4px);
-            }
-
-            /* ── Right-Side Circular Control ────────────────────────────── */
-            .va-side-control {
-              position: absolute;
-              right: clamp(18px, 2vw, 35px);
-              top: 22%;
-              z-index: 16;
-              width: 34px;
-              height: 34px;
-              padding: 0;
-              display: grid;
-              place-items: center;
-              border: 1px solid rgba(255, 251, 244, 0.9);
-              border-radius: 50%;
-              background: rgba(30, 4, 9, 0.15);
-              color: #fffaf3;
+              color: #1E0409;
               cursor: pointer;
-              backdrop-filter: blur(8px);
+              transition: color 250ms ease;
               opacity: 0;
-              transform: scale(0.65);
-              animation: va-control-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 1.25s forwards;
+              transform: translateY(12px);
             }
 
-            @keyframes va-control-in {
+            .va-active .va-panel-action {
+              animation: va-fade-up 850ms cubic-bezier(0.16, 1, 0.3, 1) 850ms forwards;
+            }
+
+            .va-panel-action:hover {
+              color: #8B1E3F;
+            }
+
+            .va-action-arrow {
+              font-size: 0.85em;
+              color: #8B1E3F;
+              transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .va-panel-action:hover .va-action-arrow {
+              transform: translate(3px, -3px);
+            }
+
+            /* ── Center Divider Line ────────────────────────────────────── */
+            .va-center-line {
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 50%;
+              z-index: 6;
+              width: 1px;
+              background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(212, 175, 55, 0.3) 15%,
+                rgba(30, 4, 9, 0.12) 50%,
+                rgba(212, 175, 55, 0.3) 85%,
+                transparent 100%
+              );
+              transform: scaleY(0);
+              transform-origin: top;
+            }
+
+            .va-active .va-center-line {
+              animation: va-scale-line 1.2s cubic-bezier(0.16, 1, 0.3, 1) 500ms forwards;
+            }
+
+            @keyframes va-scale-line {
               to {
-                opacity: 1;
-                transform: scale(1);
+                transform: scaleY(1);
               }
             }
 
-            .va-side-control::before {
-              content: "";
-              width: 3px;
-              height: 3px;
-              border-radius: 50%;
-              background: currentColor;
-              box-shadow: 0 0 9px rgba(255, 255, 255, 0.8);
-            }
-
-            .va-side-control::after {
-              content: "";
+            /* ── Center Regal Booking Crest Button ──────────────────────── */
+            .va-center-crest {
               position: absolute;
-              inset: -5px;
-              border: 1px solid rgba(255, 251, 244, 0.19);
-              border-radius: inherit;
+              left: 50%;
+              top: 50%;
+              z-index: 20;
+              transform: translate(-50%, -50%) scale(0.9);
               opacity: 0;
-              transform: scale(0.65);
-              transition: opacity 350ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+              cursor: pointer;
+              pointer-events: auto;
+              transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease;
             }
 
-            .va-side-control:hover::after {
-              opacity: 1;
-              transform: scale(1);
+            .va-active .va-center-crest {
+              animation: va-crest-in 950ms cubic-bezier(0.16, 1, 0.3, 1) 800ms forwards;
+            }
+
+            @keyframes va-crest-in {
+              to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+              }
+            }
+
+            .va-center-crest:hover {
+              transform: translate(-50%, -50%) scale(1.06);
+            }
+
+            .va-crest-inner {
+              display: inline-flex;
+              align-items: center;
+              gap: 9px;
+              padding: 7px 18px 7px 9px;
+              border-radius: 9999px;
+              background: #FAF6F0;
+              border: 1.5px solid rgba(212, 175, 55, 0.55);
+              box-shadow:
+                0 14px 36px rgba(30, 4, 9, 0.14),
+                0 3px 10px rgba(30, 4, 9, 0.08);
+              transition: border-color 300ms ease, box-shadow 300ms ease, background 300ms ease;
+            }
+
+            .va-center-crest:hover .va-crest-inner {
+              background: #FFFFFF;
+              border-color: rgba(212, 175, 55, 0.9);
+              box-shadow:
+                0 18px 45px rgba(30, 4, 9, 0.2),
+                0 4px 14px rgba(30, 4, 9, 0.1);
+            }
+
+            .va-crest-seal {
+              width: 28px;
+              height: 28px;
+              border-radius: 50%;
+              background: #FAF6F0;
+              border: 1px solid rgba(212, 175, 55, 0.4);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 3px;
+            }
+
+            .va-crest-icon {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+              display: block;
+            }
+
+            .va-crest-label {
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              font-size: clamp(9px, 0.72vw, 11px);
+              font-weight: 600;
+              letter-spacing: 0.24em;
+              text-transform: uppercase;
+              color: #1E0409;
+              white-space: nowrap;
+            }
+
+            .va-crest-arrow {
+              font-size: 0.85em;
+              color: #8B1E3F;
+              transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .va-center-crest:hover .va-crest-arrow {
+              transform: translate(3px, -3px);
             }
 
             /* ── Bottom Left Link ───────────────────────────────────────── */
             .va-bottom-left {
               position: absolute;
-              bottom: clamp(20px, 2.6vh, 32px);
-              left: clamp(22px, 2.5vw, 42px);
-              z-index: 16;
-              color: rgba(255, 251, 245, 0.96);
-              font-size: clamp(9px, 0.78vw, 13px);
-              font-weight: 500;
+              left: clamp(24px, 3.5vw, 52px);
+              bottom: clamp(18px, 2.8vh, 32px);
+              z-index: 20;
+              color: #1E0409;
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              font-size: clamp(9px, 0.72vw, 11px);
+              font-weight: 600;
+              line-height: 1;
+              letter-spacing: 0.22em;
+              text-transform: uppercase;
+              opacity: 0;
+              transform: translateY(12px);
+              transition: color 250ms ease;
+            }
+
+            .va-active .va-bottom-left {
+              animation: va-bottom-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards;
+            }
+
+            .va-bottom-left:hover {
+              color: #8B1E3F;
+            }
+
+            /* ── Bottom Right Concierge Controls ────────────────────────── */
+            .va-bottom-right {
+              position: absolute;
+              right: clamp(24px, 3.5vw, 52px);
+              bottom: clamp(18px, 2.8vh, 32px);
+              z-index: 20;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              color: #1E0409;
+              font-family: var(--font-inter), 'Inter', sans-serif;
+              font-size: clamp(9px, 0.72vw, 11px);
+              font-weight: 600;
               line-height: 1;
               letter-spacing: 0.2em;
               text-transform: uppercase;
               opacity: 0;
-              transform: translateY(13px);
-              animation: va-bottom-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 1.22s forwards;
+              transform: translateY(12px);
+            }
+
+            .va-active .va-bottom-right {
+              animation: va-bottom-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards;
             }
 
             @keyframes va-bottom-in {
@@ -597,308 +689,243 @@ export default function ContactSplitSection() {
               }
             }
 
-            /* ── Bottom Right Controls ──────────────────────────────────── */
-            .va-bottom-right {
-              position: absolute;
-              right: clamp(22px, 2.5vw, 42px);
-              bottom: clamp(20px, 2.6vh, 32px);
-              z-index: 16;
-              display: flex;
-              align-items: center;
-              gap: 10px;
-              color: rgba(255, 251, 245, 0.96);
-              font-size: clamp(9px, 0.78vw, 13px);
-              font-weight: 500;
-              line-height: 1;
-              letter-spacing: 0.2em;
-              text-transform: uppercase;
-              opacity: 0;
-              transform: translateY(13px);
-              animation: va-bottom-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 1.22s forwards;
-            }
-
             .va-bottom-divider {
               width: 1px;
-              height: 14px;
-              margin: 0 3px;
-              background: rgba(255, 250, 243, 0.36);
+              height: 13px;
+              margin: 0 2px;
+              background: rgba(30, 4, 9, 0.25);
             }
 
             .va-lang {
               cursor: pointer;
               transition: color 200ms ease;
-              color: rgba(255, 250, 243, 0.52);
+              color: rgba(30, 4, 9, 0.5);
+              background: none;
+              border: none;
+              padding: 0;
+              font-size: inherit;
+              font-weight: inherit;
+              letter-spacing: inherit;
             }
 
             .va-lang:hover,
             .va-lang-active {
-              color: #ffffff;
+              color: #8B1E3F;
+              font-weight: 700;
             }
 
             /* ── Tablet Responsive Rules ────────────────────────────────── */
             @media (max-width: 900px) {
-              .va-title {
-                font-size: clamp(35px, 5.3vw, 50px);
+              .va-portrait-frame {
+                width: clamp(240px, 34vw, 320px);
               }
-              .va-title-left {
-                left: 13%;
-              }
-              .va-title-right {
-                left: 16%;
-              }
-              .va-card-area {
-                width: clamp(170px, 23vw, 225px);
+              .va-panel-title {
+                font-size: clamp(24px, 3.8vw, 32px);
               }
               .va-brand-name {
-                font-size: 26px;
+                font-size: 22px;
               }
             }
 
             /* ── Mobile Responsive Rules ────────────────────────────────── */
             @media (max-width: 650px) {
               .va-root {
-                min-height: 620px;
+                height: auto;
+                min-height: 100svh;
+                overflow-y: auto;
+                padding-bottom: 70px;
               }
 
               .va-panels {
+                position: relative;
                 grid-template-columns: 1fr;
-                grid-template-rows: 50% 50%;
+                grid-template-rows: auto auto;
+                padding-top: 90px;
               }
 
-              .va-panel-left,
-              .va-panel-right {
-                clip-path: none;
-                animation: none;
+              .va-panel {
+                padding: 24px 20px;
+                clip-path: none !important;
+                animation: none !important;
               }
 
-              .va-panel-left .va-panel-image {
-                object-position: center 61%;
-              }
-
-              .va-panel-right .va-panel-image {
-                object-position: 48% 43%;
+              .va-portrait-frame {
+                width: 82%;
+                max-width: 320px;
               }
 
               .va-center-line {
-                top: 50%;
-                left: 0;
-                right: 0;
-                bottom: auto;
-                width: 100%;
-                height: 1px;
-                transform: scaleX(0);
-                transform-origin: left;
-                animation: va-scale-line-mobile 1.2s cubic-bezier(0.16, 1, 0.3, 1) 700ms forwards;
+                display: none;
               }
 
-              @keyframes va-scale-line-mobile {
-                to {
-                  transform: scaleX(1);
-                }
+              .va-center-crest {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin: 20px auto;
+                display: flex;
+                justify-content: center;
+              }
+
+              .va-active .va-center-crest {
+                animation: none;
+                opacity: 1;
+                transform: none;
               }
 
               .va-topbar {
-                height: 76px;
-                align-items: start;
-                padding: 22px 16px 0;
+                height: 70px;
+                padding: 0 18px;
               }
 
-              .va-brand {
-                top: -8px;
-              }
-
-              .va-mark {
-                width: 30px;
-                height: 35px;
-                transform: scale(0.72);
-                margin-bottom: -5px;
-              }
-
-              .va-brand-name {
-                font-size: 19px;
-              }
-
-              .va-brand-subtitle {
-                margin-top: 6px;
-                font-size: 5px;
-              }
-
-              .va-nav-link {
-                font-size: 8px;
-              }
-
-              .va-title {
-                font-size: clamp(28px, 9vw, 40px);
-              }
-
-              .va-title-left {
-                top: 15%;
-                left: 11%;
-              }
-
-              .va-title-right {
+              .va-bottom-left,
+              .va-bottom-right {
+                position: relative;
                 left: auto;
-                right: 8%;
-                bottom: 9%;
-              }
-
-              .va-card-area {
-                top: 50%;
-                width: clamp(125px, 34vw, 170px);
-              }
-
-              .va-card-wrap {
-                border-radius: 22px;
-              }
-
-              .va-explore {
-                margin-top: 9px;
-                font-size: 9px;
-              }
-
-              .va-side-control {
-                top: 72%;
-                right: 15px;
-                width: 28px;
-                height: 28px;
-              }
-
-              .va-bottom-left,
-              .va-bottom-right {
-                bottom: 16px;
-                font-size: 7px;
-              }
-
-              .va-bottom-left {
-                left: 15px;
-              }
-
-              .va-bottom-right {
-                right: 15px;
-                gap: 7px;
-              }
-            }
-
-            /* ── Prefers-Reduced-Motion ─────────────────────────────────── */
-            @media (prefers-reduced-motion: reduce) {
-              .va-panel-left,
-              .va-panel-right,
-              .va-panel-image,
-              .va-center-line,
-              .va-nav-link,
-              .va-brand,
-              .va-title,
-              .va-card-wrap,
-              .va-explore,
-              .va-side-control,
-              .va-bottom-left,
-              .va-bottom-right {
-                animation-duration: 1ms !important;
-                animation-delay: 0ms !important;
-              }
-
-              .va-card-image,
-              .va-explore-arrow,
-              .va-nav-link::after {
-                transition: none !important;
+                right: auto;
+                bottom: auto;
+                justify-content: center;
+                text-align: center;
+                padding: 10px 0;
               }
             }
           `,
         }}
       />
 
-      {/* 1. Split Panels */}
-      <div className="va-panels">
-        {/* Left Panel: Atelier Craft & Heritage */}
-        <section className="va-panel va-panel-left">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={LEFT_IMAGE}
-            alt="Chandrani luxury handwoven sarees arranged with traditional elegance"
-            className="va-panel-image"
-            onError={handleImageError}
-            loading="eager"
-          />
-        </section>
-
-        {/* Right Panel: Portrait of Royal Drapes */}
-        <section className="va-panel va-panel-right">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={RIGHT_IMAGE}
-            alt="Close-up portrait of model in lavender silk saree"
-            className="va-panel-image"
-            onError={handleImageError}
-            loading="eager"
-          />
-        </section>
+      {/* 1. Base Textured Parchment Backdrop */}
+      <div className="va-bg-parchment" aria-hidden="true">
+        <Image
+          src="/corridor/bg-parchment.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
       </div>
 
-      {/* 2. Center Animated Scale Divider */}
-      <div className="va-center-line" aria-hidden="true" />
-
-      {/* 3. Top Navigation Bar */}
+      {/* 2. Top Navigation Bar */}
       <header className="va-topbar">
-        <a href="#hero" className="va-nav-link">
+        <a href="#atelier" className="va-nav-link">
           Atelier
         </a>
 
         <a href="#" className="va-brand" aria-label="Aarohi Haute Couture">
-          <span className="va-mark" aria-hidden="true" />
-          <span className="va-brand-name">aarohi</span>
-          <span className="va-brand-subtitle">haute couture</span>
+          <div className="va-seal-wrap">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/logo-mark.png"
+              alt="Aarohi Monogram Seal"
+              className="va-seal-img"
+            />
+          </div>
+          <span className="va-brand-name">Aarohi</span>
+          <span className="va-brand-subtitle">HAUTE COUTURE</span>
         </a>
 
-        <a href="#inquiries" className="va-nav-link va-nav-right">
+        <a href="#concierge" className="va-nav-link va-nav-right">
           Concierge
         </a>
       </header>
 
-      {/* 4. Large Panel Editorial Titles */}
-      <h1 className="va-title va-title-left">Private Styling</h1>
-      <h2 className="va-title va-title-right">Get In Touch</h2>
+      {/* 3. Center Animated Scale Divider */}
+      <div className="va-center-line" aria-hidden="true" />
 
-      {/* 5. Center Floating Concierge Card */}
+      {/* 4. Split-Screen Majestic Panels */}
+      <div className="va-panels">
+        {/* Left Panel: Atelier / Private Styling */}
+        <section className="va-panel va-panel-left" id="atelier">
+          <div className="va-panel-header">
+            <span className="va-panel-tag">ATELIER · PRIVATE SALON</span>
+            <h2 className="va-panel-title">
+              Private <span className="va-title-italic">Styling</span>
+            </h2>
+          </div>
+
+          <div className="va-portrait-frame">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={LEFT_IMAGE}
+              alt="Candlelit heritage black floral silk saree drape"
+              className="va-panel-image"
+              onError={handleImageError}
+              loading="eager"
+            />
+          </div>
+
+          <a
+            href="mailto:concierge@aarohisarees.com?subject=Private%20Styling%20Appointment"
+            className="va-panel-action"
+          >
+            <span>Request Consultation</span>
+            <span className="va-action-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        </section>
+
+        {/* Right Panel: Concierge / Bespoke Inquiries */}
+        <section className="va-panel va-panel-right" id="concierge">
+          <div className="va-panel-header">
+            <span className="va-panel-tag">FLAGSHIP · GLOBAL SERVICES</span>
+            <h2 className="va-panel-title">
+              Flagship <span className="va-title-italic">Concierge</span>
+            </h2>
+          </div>
+
+          <div className="va-portrait-frame">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={RIGHT_IMAGE}
+              alt="Golden-hour lavender courtyard floral saree portrait"
+              className="va-panel-image"
+              onError={handleImageError}
+              loading="eager"
+            />
+          </div>
+
+          <a
+            href="mailto:concierge@aarohisarees.com?subject=Atelier%20Concierge%20Inquiry"
+            className="va-panel-action"
+          >
+            <span>Connect With Concierge</span>
+            <span className="va-action-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        </section>
+      </div>
+
+      {/* 5. Center Regal Booking Crest Button */}
       <a
         href="mailto:concierge@aarohisarees.com?subject=Atelier%20Styling%20Appointment"
-        className="va-card-area"
+        className="va-center-crest"
         aria-label="Book a private styling consultation"
       >
-        <div className="va-card-wrap">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={CARD_IMAGE}
-            alt="Aarohi heritage model drape"
-            className="va-card-image"
-            onError={handleImageError}
-            loading="eager"
-          />
-        </div>
-
-        <div className="va-explore">
-          Book Appointment
-          <span className="va-explore-arrow" aria-hidden="true">
+        <div className="va-crest-inner">
+          <div className="va-crest-seal">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/logo-mark.png"
+              alt=""
+              className="va-crest-icon"
+            />
+          </div>
+          <span className="va-crest-label">BOOK APPOINTMENT</span>
+          <span className="va-crest-arrow" aria-hidden="true">
             ↗
           </span>
         </div>
       </a>
 
-      {/* 6. Right-Side Circular Control Button */}
-      <button
-        className="va-side-control"
-        type="button"
-        aria-label="View flagship ateliers"
-        onClick={() => {
-          window.location.href = "#locations";
-        }}
-      />
-
-      {/* 7. Bottom Left Link */}
+      {/* 6. Bottom Left Flagship Locations */}
       <a href="#flagship" className="va-bottom-left">
         Flagship: Kolkata · New Delhi
       </a>
 
-      {/* 8. Bottom Right Concierge Controls */}
+      {/* 7. Bottom Right Concierge Contact & Language Controls */}
       <div className="va-bottom-right">
         <a href="tel:+919830000000">Call Us</a>
         <span className="va-bottom-divider" aria-hidden="true" />

@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Hero from "@/components/hero/Hero";
 import VideoLoader from "@/components/loader/VideoLoader";
 import NewArrivalsSection from "@/components/new-arrivals/NewArrivalsSection";
 import HeritageSection from "@/components/heritage/HeritageSection";
-import SilkWeave from "@/components/silk/SilkWeave";
+
+const SilkWeave = dynamic(() => import("@/components/silk/SilkWeave"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [hasCompletedIntro, setHasCompletedIntro] = useState(false);

@@ -151,13 +151,13 @@ export default function ContactSplitSection() {
               height: 100%;
               display: flex;
               align-items: center;
-              padding: clamp(92px, 13.5vh, 120px) clamp(24px, 3.5vw, 55px) clamp(75px, 11vh, 95px);
+              padding: clamp(92px, 13.5vh, 120px) clamp(24px, 3.5vw, 60px) clamp(75px, 11vh, 95px);
             }
 
             /* ── Left Panel Reveal ──────────────────────────────────────── */
             .va-panel-left {
               justify-content: flex-end;
-              padding-right: clamp(45px, 6vw, 92px);
+              padding-right: clamp(80px, 9.5vw, 150px);
               clip-path: inset(0 100% 0 0);
             }
 
@@ -174,7 +174,7 @@ export default function ContactSplitSection() {
             /* ── Right Panel Reveal ─────────────────────────────────────── */
             .va-panel-right {
               justify-content: flex-start;
-              padding-left: clamp(45px, 6vw, 92px);
+              padding-left: clamp(80px, 9.5vw, 150px);
               clip-path: inset(0 0 0 100%);
             }
 
@@ -191,10 +191,10 @@ export default function ContactSplitSection() {
             /* ── Framed Portrait Saree Panels ───────────────────────────── */
             .va-portrait-frame {
               position: relative;
-              width: 76%;
-              max-width: 440px;
+              width: 70%;
+              max-width: 400px;
               height: 100%;
-              max-height: 520px;
+              max-height: 490px;
               border-radius: clamp(20px, 2vw, 32px);
               overflow: hidden;
               background: #F4ECE1;
@@ -421,7 +421,7 @@ export default function ContactSplitSection() {
               font-weight: 600;
               line-height: 1;
               letter-spacing: 0.08em;
-              color: #1E0409;
+              color: #4A0E17;
               margin-top: 4px;
             }
 
@@ -433,15 +433,15 @@ export default function ContactSplitSection() {
               line-height: 1;
               letter-spacing: 0.4em;
               text-transform: uppercase;
-              color: #8B1E3F;
+              color: #4A0E17;
             }
 
-            /* ── Large Panel Titles (Luxury Royal Cormorant Garamond Serif) ─── */
+            /* ── Large Panel Title (Luxury Royal Cormorant Garamond Serif) ──── */
             .va-title {
               position: absolute;
               z-index: 18;
               margin: 0;
-              color: #1E0409;
+              color: #4A0E17;
               font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
               font-size: clamp(28px, 2.7vw, 42px);
               font-weight: 500;
@@ -459,7 +459,7 @@ export default function ContactSplitSection() {
               font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
               font-style: italic;
               font-weight: 400;
-              color: #8B1E3F;
+              color: #4A0E17;
             }
 
             .va-title-left {
@@ -467,27 +467,11 @@ export default function ContactSplitSection() {
               transform: translate(-50%, 16px);
             }
 
-            .va-title-right {
-              bottom: clamp(26px, 4.4vh, 42px);
-              transform: translate(-50%, 16px);
-            }
-
             .va-active .va-title-left {
               animation: va-title-top-in 1s cubic-bezier(0.16, 1, 0.3, 1) 750ms forwards;
             }
 
-            .va-active .va-title-right {
-              animation: va-title-bottom-in 1s cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
-            }
-
             @keyframes va-title-top-in {
-              to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-              }
-            }
-
-            @keyframes va-title-bottom-in {
               to {
                 opacity: 1;
                 transform: translate(-50%, 0);
@@ -569,7 +553,7 @@ export default function ContactSplitSection() {
               display: flex;
               align-items: center;
               gap: 6px;
-              color: #1E0409;
+              color: #4A0E17;
               font-size: clamp(10px, 0.9vw, 13px);
               font-weight: 600;
               line-height: 1;
@@ -593,57 +577,12 @@ export default function ContactSplitSection() {
             .va-explore-arrow {
               font-size: 0.76em;
               display: inline-block;
-              color: #8B1E3F;
+              color: #4A0E17;
               transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
             }
 
             .va-card-area:hover .va-explore-arrow {
               transform: translate(3px, -3px);
-            }
-
-            /* ── Right-Side Circular Control ────────────────────────────── */
-            .va-side-control {
-              position: absolute;
-              right: clamp(18px, 2vw, 35px);
-              top: 22%;
-              z-index: 16;
-              width: 32px;
-              height: 32px;
-              padding: 0;
-              display: grid;
-              place-items: center;
-              border: 1px solid rgba(30, 4, 9, 0.35);
-              border-radius: 50%;
-              background: rgba(255, 255, 255, 0.85);
-              color: #1E0409;
-              cursor: pointer;
-              opacity: 0;
-              transform: scale(0.7);
-              transition: transform 300ms ease, background 300ms ease;
-            }
-
-            .va-active .va-side-control {
-              animation: va-side-in 800ms cubic-bezier(0.16, 1, 0.3, 1) 1.35s forwards;
-            }
-
-            @keyframes va-side-in {
-              to {
-                opacity: 1;
-                transform: scale(1);
-              }
-            }
-
-            .va-side-control:hover {
-              transform: scale(1.12);
-              background: #ffffff;
-            }
-
-            .va-side-control::after {
-              content: "";
-              width: 4px;
-              height: 4px;
-              border-radius: 50%;
-              background: #8B1E3F;
             }
 
             /* ── Bottom Left Link ───────────────────────────────────────── */
@@ -933,16 +872,6 @@ export default function ContactSplitSection() {
           </span>
         </div>
       </a>
-
-      {/* 7. Right-Side Circular Control Button */}
-      <button
-        className="va-side-control"
-        type="button"
-        aria-label="View flagship ateliers"
-        onClick={() => {
-          window.location.href = "#contact";
-        }}
-      />
 
       {/* 8. Bottom Left Flagship Locations */}
       <a href="#contact" className="va-bottom-left">

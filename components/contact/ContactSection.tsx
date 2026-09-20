@@ -46,16 +46,16 @@ export default function ContactSection() {
         
         {/* ── Editorial Section Header: "Get In Touch" ─────────────────────── */}
         <div className="text-center mb-12 sm:mb-16">
-          <span className="block font-sans text-[11px] font-semibold tracking-[0.38em] text-[#E8C56B] uppercase mb-3">
+          <span className="block font-sans text-[11px] font-semibold tracking-[0.38em] text-[#FAF6F0]/85 uppercase mb-3">
             Concierge &amp; Flagship Atelier
           </span>
           <h2 className="font-serif text-[clamp(38px,4.5vw,58px)] font-light text-[#FAF6F0] tracking-wide leading-none">
-            Get In <span className="italic font-normal text-[#E8C56B]">Touch</span>
+            Get In <span className="italic font-normal text-[#FAF6F0]">Touch</span>
           </h2>
           <div className="flex items-center justify-center gap-3 mt-4">
-            <div className="h-[1px] w-14 bg-gradient-to-r from-transparent to-[#D4AF37]/70" />
-            <span className="text-[#D4AF37] text-xs">❖</span>
-            <div className="h-[1px] w-14 bg-gradient-to-l from-transparent to-[#D4AF37]/70" />
+            <div className="h-[1px] w-14 bg-gradient-to-r from-transparent to-[#FAF6F0]/40" />
+            <span className="text-[#FAF6F0]/70 text-xs">❖</span>
+            <div className="h-[1px] w-14 bg-gradient-to-l from-transparent to-[#FAF6F0]/40" />
           </div>
         </div>
 

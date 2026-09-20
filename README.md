@@ -25,3 +25,9 @@ Alpha-channel transparency keying and soft boundary feathering to eliminate crop
 
 ## Responsive Scaling
 16:9 container aspect ratio with percentage coordinates across all viewport widths.
+
+## Local Development
+```bash
+npm install
+npm run dev
+```

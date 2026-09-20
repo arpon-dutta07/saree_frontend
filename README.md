@@ -31,3 +31,6 @@ Alpha-channel transparency keying and soft boundary feathering to eliminate crop
 npm install
 npm run dev
 ```
+
+## Bounding Box Reference
+Exact measured percentage coordinates for desktop and high-DPI displays.

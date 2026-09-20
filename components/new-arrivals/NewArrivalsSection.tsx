@@ -1,0 +1,376 @@
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface SareeItem {
+  id: string;
+  name: string;
+  subtitle: string;
+  category: string;
+  image: string;
+  colorTag: string;
+}
+
+const sareeCollection: SareeItem[] = [
+  {
+    id: "01",
+    name: "RANI PINK",
+    subtitle: "Bold Traditions",
+    category: "SILK SAREES",
+    image: "/new-arrivals/card-rani-pink.png",
+    colorTag: "#D91656",
+  },
+  {
+    id: "02",
+    name: "CORAL ORANGE",
+    subtitle: "Vibrant Stories",
+    category: "COTTON SAREES",
+    image: "/new-arrivals/card-coral-orange.png",
+    colorTag: "#FA8072",
+  },
+  {
+    id: "03",
+    name: "LAVENDER",
+    subtitle: "Graceful Appeal",
+    category: "LINEN SAREES",
+    image: "/new-arrivals/card-lavender.png",
+    colorTag: "#BDB2FF",
+  },
+  {
+    id: "04",
+    name: "SUNSHINE YELLOW",
+    subtitle: "Radiant You",
+    category: "FESTIVE EDIT",
+    image: "/new-arrivals/card-yellow.png",
+    colorTag: "#FFD166",
+  },
+];
+
+const categories = [
+  "SILK SAREES",
+  "COTTON SAREES",
+  "LINEN SAREES",
+  "FESTIVE EDIT",
+];
+
+export default function NewArrivalsSection() {
+  const [activeCategory, setActiveCategory] = useState<string>("SILK SAREES");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? sareeCollection.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === sareeCollection.length - 1 ? 0 : prev + 1));
+  };
+
+  return (
+    <section
+      id="new-arrivals"
+      className="relative w-full aspect-[16/9] max-h-screen min-h-[700px] overflow-hidden bg-[#FBF7F0] text-[#341118] select-none mx-auto"
+    >
+      {/* 1. Base Textured Paper Background Plate */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <Image
+          src="/new-arrivals/bg-cream.png"
+          alt="Warm cream textured parchment backdrop"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        {/* Soft Ambient Warm Tint */}
+        <div className="absolute inset-0 bg-[#FBF7F0]/30 mix-blend-multiply pointer-events-none" />
+      </div>
+
+      {/* 2. Top Navigation Bar */}
+      <header className="absolute top-0 left-0 right-0 h-[11%] px-[3.5%] flex items-center justify-between z-40 select-none">
+        {/* Brand Monogram Seal */}
+        <a href="#" className="flex-shrink-0 group focus:outline-none h-[75%] aspect-square" aria-label="CG Luxury Sarees Home">
+          <div className="w-full h-full rounded-full bg-[#FAF6F0] p-[8%] flex items-center justify-center shadow-md border border-[#D4AF37]/30 transition-transform duration-300 group-hover:scale-105">
+            <div className="relative w-full h-full">
+              <Image
+                src="/hero/logo-mark.png"
+                alt="CG Monogram Seal"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </a>
+
+        {/* Nav Links */}
+        <nav
+          aria-label="New Arrivals Navigation"
+          className="hidden md:flex items-center gap-[2.2vw]"
+        >
+          {["SAREES", "NEW ARRIVALS", "COLLECTIONS", "GIFTS", "ABOUT", "JOURNAL", "CONTACT"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+              className={`text-[clamp(10px,0.82vw,12px)] font-serif tracking-[0.2em] transition-colors duration-200 ${
+                item === "NEW ARRIVALS" ? "text-[#3A121A] font-semibold" : "text-[#5A3A40] hover:text-[#3A121A]"
+              }`}
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
+
+        {/* Action Icons */}
+        <div className="flex items-center gap-[1.4vw] text-[#3A121A]">
+          <button type="button" aria-label="Search" className="p-1 hover:opacity-75 focus:outline-none">
+            <svg className="w-[1.3vw] min-w-[16px] h-[1.3vw] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+            </svg>
+          </button>
+          <button type="button" aria-label="Account" className="p-1 hover:opacity-75 focus:outline-none">
+            <svg className="w-[1.3vw] min-w-[16px] h-[1.3vw] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" strokeLinecap="round" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </button>
+          <button type="button" aria-label="Cart" className="relative p-1 hover:opacity-75 focus:outline-none">
+            <svg className="w-[1.3vw] min-w-[16px] h-[1.3vw] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M3 6h18" />
+              <path d="M16 10a4 4 0 0 1-8 0" strokeLinecap="round" />
+            </svg>
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-[#8B1E3F] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+              0
+            </span>
+          </button>
+        </div>
+      </header>
+
+      {/* 3. Top-Left Floating Watercolor Ribbon Overlay */}
+      <div className="absolute top-[10%] left-[20%] w-[6.5vw] max-w-[110px] aspect-[2/3] pointer-events-none z-10 opacity-95 mix-blend-multiply">
+        <Image
+          src="/new-arrivals/watercolor-ribbon.png"
+          alt="Watercolor floral ribbon motif"
+          fill
+          sizes="10vw"
+          className="object-contain"
+        />
+      </div>
+
+      {/* 4. Bottom-Left Curved Burgundy Botanical Corner Overlay */}
+      <div className="absolute bottom-0 left-0 w-[22vw] max-w-[320px] aspect-square pointer-events-none z-20">
+        <Image
+          src="/new-arrivals/corner-overlay.png"
+          alt="Burgundy botanical corner crest"
+          fill
+          sizes="25vw"
+          className="object-contain object-left-bottom"
+        />
+      </div>
+
+      {/* 5. Main Content Container */}
+      <div className="relative w-full h-full z-20 flex flex-col justify-between px-[3.5%] pt-[8.5%] pb-[3.5%]">
+        <div className="w-full h-full grid grid-cols-12 gap-[2.5vw] items-stretch">
+          
+          {/* LEFT EDITORIAL COLUMN (3.5 / 12 cols) */}
+          <div className="col-span-12 lg:col-span-4 xl:col-span-3 flex flex-col justify-between z-30 pr-2">
+            
+            {/* Top Text Block */}
+            <div className="space-y-[1.2vw]">
+              {/* Eyebrow */}
+              <div className="flex items-center gap-2">
+                <span className="text-[#A47148] text-xs">◈</span>
+                <span className="font-sans text-[clamp(10px,0.85vw,13px)] tracking-[0.38em] uppercase text-[#8D6E63] font-medium">
+                  NEW ARRIVALS
+                </span>
+              </div>
+
+              {/* Main Headline */}
+              <h2 className="font-serif text-[clamp(28px,3.2vw,48px)] font-normal text-[#2A0C14] leading-[1.08] tracking-[0.02em]">
+                Fresh Weaves,
+                <br />
+                <span className="italic font-light">Timeless Grace</span>
+              </h2>
+
+              {/* Decorative Divider */}
+              <div className="w-[45%] h-[1px] bg-gradient-to-r from-[#A47148]/60 via-[#A47148]/30 to-transparent flex items-center">
+                <div className="w-1.5 h-1.5 rotate-45 bg-[#A47148]/80" />
+              </div>
+
+              {/* Body Text */}
+              <p className="font-sans text-[clamp(11px,0.88vw,14px)] text-[#5A3A40]/90 leading-relaxed max-w-[280px]">
+                Contemporary designs with
+                <br />
+                a touch of tradition & elegance
+              </p>
+
+              {/* Pill CTA Button */}
+              <div className="pt-2">
+                <a
+                  href="#collection"
+                  className="group inline-flex items-center justify-between gap-4 px-[1.8vw] py-[0.85vw] rounded-full bg-[#4A101D] text-[#FAF6F0] hover:bg-[#340912] transition-all duration-300 shadow-[0_6px_20px_rgba(74,16,29,0.25)] hover:shadow-[0_8px_25px_rgba(74,16,29,0.35)] focus:outline-none"
+                >
+                  <span className="font-sans text-[clamp(9px,0.75vw,11px)] font-semibold tracking-[0.24em] uppercase">
+                    DISCOVER OUR ARRIVALS
+                  </span>
+                  <svg
+                    className="w-3 h-3 transform transition-transform duration-200 group-hover:translate-x-1 text-[#FAF6F0]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Bottom Category Sub-Navigation List */}
+            <nav
+              aria-label="New Arrivals Categories"
+              className="mt-auto pt-6 space-y-[0.7vw] z-30"
+            >
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => {
+                      setActiveCategory(cat);
+                      const targetIndex = sareeCollection.findIndex((s) => s.category === cat);
+                      if (targetIndex !== -1) setCurrentIndex(targetIndex);
+                    }}
+                    className="group block text-left w-full focus:outline-none"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className={`h-[1px] transition-all duration-300 ${
+                          isActive
+                            ? "w-5 bg-[#A47148]"
+                            : "w-0 group-hover:w-3 bg-[#A47148]/60"
+                        }`}
+                      />
+                      <span
+                        className={`font-sans text-[clamp(10px,0.8vw,12px)] tracking-[0.26em] uppercase transition-colors duration-200 ${
+                          isActive
+                            ? "text-[#4A101D] font-semibold"
+                            : "text-[#6D4C53] hover:text-[#4A101D]"
+                        }`}
+                      >
+                        {cat}
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* RIGHT 4-COLUMN CARDS SHOWCASE (8.5 / 12 cols) */}
+          <div className="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col justify-between h-full">
+            
+            {/* 4 Cards Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-[1.2vw] items-stretch h-[85%]">
+              {sareeCollection.map((saree, idx) => {
+                const isSelected = currentIndex === idx;
+                return (
+                  <motion.div
+                    key={saree.id}
+                    className="relative flex flex-col h-full group cursor-pointer"
+                    onMouseEnter={() => setHoveredCard(saree.id)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                    onClick={() => {
+                      setCurrentIndex(idx);
+                      setActiveCategory(saree.category);
+                    }}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.8,
+                      delay: 0.15 + idx * 0.1,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                  >
+                    {/* Portrait Image Container */}
+                    <div className="relative w-full flex-1 rounded-sm overflow-hidden shadow-[0_6px_25px_rgba(42,12,20,0.08)] transition-all duration-500 group-hover:shadow-[0_12px_35px_rgba(42,12,20,0.18)]">
+                      <Image
+                        src={saree.image}
+                        alt={`${saree.name} - ${saree.subtitle}`}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 20vw"
+                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      
+                      {/* Subtle hover gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+
+                    {/* Card Label & Subtitle Below */}
+                    <div className="pt-[0.9vw] text-center flex flex-col items-center select-none">
+                      <h3 className="font-sans text-[clamp(11px,0.88vw,14px)] font-medium tracking-[0.24em] text-[#2A0C14] uppercase">
+                        {saree.name}
+                      </h3>
+                      <p className="font-serif italic text-[clamp(10px,0.8vw,13px)] text-[#7A5860] mt-0.5 tracking-wide">
+                        {saree.subtitle}
+                      </p>
+                      
+                      {/* Subtle underline indicator */}
+                      <div
+                        className={`h-[1.5px] mt-1.5 transition-all duration-300 ${
+                          isSelected
+                            ? "w-8 bg-[#A47148]"
+                            : "w-4 bg-[#A47148]/30 group-hover:w-6 group-hover:bg-[#A47148]"
+                        }`}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Bottom Carousel Navigation Controls (< 01 — 04 >) */}
+            <div className="flex items-center justify-end gap-3 pt-3 select-none">
+              {/* Prev Button */}
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Previous saree"
+                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Counter Display */}
+              <div className="font-serif text-[clamp(11px,0.85vw,13px)] tracking-[0.25em] text-[#4A101D] font-medium px-1">
+                <span>0{currentIndex + 1}</span>
+                <span className="mx-2 opacity-50">—</span>
+                <span className="opacity-60">04</span>
+              </div>
+
+              {/* Next Button */}
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Next saree"
+                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -7,3 +7,12 @@ Front-end build featuring layered interactive hero section with framer-motion or
 - TypeScript
 - Tailwind CSS
 - Framer Motion
+
+## Layer Stacking Architecture
+- Background (z: 0)
+- Lanterns & Floral Vine (z: 20)
+- Seated Red Model (z: 24)
+- Standing Black Model (z: 26)
+- Headline & CTA (z: 30)
+- Foreground Floral Uruli (z: 40)
+- Navbar & Monogram (z: 50)

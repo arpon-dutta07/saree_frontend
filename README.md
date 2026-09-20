@@ -16,3 +16,6 @@ Front-end build featuring layered interactive hero section with framer-motion or
 - Headline & CTA (z: 30)
 - Foreground Floral Uruli (z: 40)
 - Navbar & Monogram (z: 50)
+
+## Animation Orchestration
+Staggered entry timeline using framer-motion with custom cubic-bezier easing.

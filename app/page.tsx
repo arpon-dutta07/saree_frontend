@@ -6,6 +6,7 @@ import Hero from "@/components/hero/Hero";
 import VideoLoader from "@/components/loader/VideoLoader";
 import NewArrivalsSection from "@/components/new-arrivals/NewArrivalsSection";
 import HeritageSection from "@/components/heritage/HeritageSection";
+import CorridorSection from "@/components/corridor/CorridorSection";
 
 const SilkWeave = dynamic(() => import("@/components/silk/SilkWeave"), {
   ssr: false,
@@ -20,6 +21,7 @@ export default function Home() {
       <Hero startAnimation={hasCompletedIntro} />
       <NewArrivalsSection />
       <HeritageSection />
+      <CorridorSection />
       <SilkWeave />
     </main>
   );

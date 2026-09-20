@@ -171,7 +171,7 @@ export default function HeritageSection() {
           aria-label="Heritage Navigation"
           className="hidden md:flex items-center gap-[2.2vw]"
         >
-          {["SAREES", "NEW ARRIVALS", "COLLECTIONS", "GIFTS", "ABOUT", "JOURNAL", "CONTACT"].map((item) => (
+          {["SAREES", "NEW ARRIVALS", "COLLECTIONS", "ABOUT", "JOURNAL", "CONTACT"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}

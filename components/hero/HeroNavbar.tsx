@@ -6,7 +6,6 @@ export default function HeroNavbar() {
     { label: "SAREES", href: "#sarees" },
     { label: "NEW ARRIVALS", href: "#new-arrivals" },
     { label: "COLLECTIONS", href: "#collections" },
-    { label: "GIFTS", href: "#gifts" },
     { label: "ABOUT", href: "#about" },
     { label: "JOURNAL", href: "#journal" },
     { label: "CONTACT", href: "#contact" },

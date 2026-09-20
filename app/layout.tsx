@@ -24,8 +24,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "CG | Sarees Woven With Culture",
+  title: "Aarohi | Haute Couture Handwoven Sarees",
   description: "Timeless drapes for modern stories. Premium handwoven ethnic sarees and artisanal collections.",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

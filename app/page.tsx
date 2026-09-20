@@ -8,6 +8,8 @@ import NewArrivalsSection from "@/components/new-arrivals/NewArrivalsSection";
 import HeritageSection from "@/components/heritage/HeritageSection";
 import CorridorSection from "@/components/corridor/CorridorSection";
 import ContactSplitSection from "@/components/contact/ContactSplitSection";
+import ContactSection from "@/components/contact/ContactSection";
+import Footer from "@/components/footer/Footer";
 
 const SilkWeave = dynamic(() => import("@/components/silk/SilkWeave"), {
   ssr: false,
@@ -25,6 +27,8 @@ export default function Home() {
       <CorridorSection />
       <SilkWeave />
       <ContactSplitSection />
+      <ContactSection />
+      <Footer />
     </main>
   );
 }

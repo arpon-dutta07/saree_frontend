@@ -34,3 +34,6 @@ npm run dev
 
 ## Bounding Box Reference
 Exact measured percentage coordinates for desktop and high-DPI displays.
+
+## Verification & Visual QA
+Validated against reference screenshot at 1440x810 and 1440x900 viewports.

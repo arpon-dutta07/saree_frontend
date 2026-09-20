@@ -22,3 +22,6 @@ Staggered entry timeline using framer-motion with custom cubic-bezier easing.
 
 ## Asset Processing
 Alpha-channel transparency keying and soft boundary feathering to eliminate crop seams.
+
+## Responsive Scaling
+16:9 container aspect ratio with percentage coordinates across all viewport widths.

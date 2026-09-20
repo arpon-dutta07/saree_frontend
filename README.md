@@ -19,3 +19,6 @@ Front-end build featuring layered interactive hero section with framer-motion or
 
 ## Animation Orchestration
 Staggered entry timeline using framer-motion with custom cubic-bezier easing.
+
+## Asset Processing
+Alpha-channel transparency keying and soft boundary feathering to eliminate crop seams.

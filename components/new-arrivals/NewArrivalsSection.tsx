@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface SareeItem {
   id: string;
@@ -55,10 +55,71 @@ const categories = [
   "FESTIVE EDIT",
 ];
 
+// Luxury Framer Motion Animation Variants matching Hero Section easing
+const luxuryEase = [0.22, 1, 0.36, 1];
+
+const sectionContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const headerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      ease: luxuryEase,
+    },
+  },
+};
+
+const editorialVariants = {
+  hidden: { opacity: 0, x: -35 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.95,
+      ease: luxuryEase,
+    },
+  },
+};
+
+const cardCascadeVariants = {
+  hidden: { opacity: 0, y: 45 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      delay: 0.2 + i * 0.12,
+      ease: luxuryEase,
+    },
+  }),
+};
+
+const cornerOverlayVariants = {
+  hidden: { opacity: 0, scale: 0.92 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 1.1,
+      ease: luxuryEase,
+    },
+  },
+};
+
 export default function NewArrivalsSection() {
   const [activeCategory, setActiveCategory] = useState<string>("SILK SAREES");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? sareeCollection.length - 1 : prev - 1));
@@ -69,9 +130,13 @@ export default function NewArrivalsSection() {
   };
 
   return (
-    <section
+    <motion.section
       id="new-arrivals"
       className="relative w-full aspect-[16/9] max-h-screen min-h-[700px] overflow-hidden bg-[#FBF7F0] text-[#341118] select-none mx-auto"
+      variants={sectionContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
     >
       {/* 1. Base Textured Paper Background Plate */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
@@ -83,12 +148,14 @@ export default function NewArrivalsSection() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        {/* Soft Ambient Warm Tint */}
         <div className="absolute inset-0 bg-[#FBF7F0]/30 mix-blend-multiply pointer-events-none" />
       </div>
 
-      {/* 2. Top Navigation Bar */}
-      <header className="absolute top-0 left-0 right-0 h-[11%] px-[3.5%] flex items-center justify-between z-40 select-none">
+      {/* 2. Top Navigation Bar (Animated slide down) */}
+      <motion.header
+        variants={headerVariants}
+        className="absolute top-0 left-0 right-0 h-[11%] px-[3.5%] flex items-center justify-between z-40 select-none"
+      >
         {/* Brand Monogram Seal */}
         <a href="#" className="flex-shrink-0 group focus:outline-none h-[75%] aspect-square" aria-label="CG Luxury Sarees Home">
           <div className="w-full h-full rounded-full bg-[#FAF6F0] p-[8%] flex items-center justify-center shadow-md border border-[#D4AF37]/30 transition-transform duration-300 group-hover:scale-105">
@@ -147,49 +214,55 @@ export default function NewArrivalsSection() {
             </span>
           </button>
         </div>
-      </header>
+      </motion.header>
 
-      {/* 3. Top-Left Floating Watercolor Ribbon Overlay */}
-      <div className="absolute top-[10%] left-[20%] w-[6.5vw] max-w-[110px] aspect-[2/3] pointer-events-none z-10 opacity-95 mix-blend-multiply">
-        <Image
-          src="/new-arrivals/watercolor-ribbon.png"
-          alt="Watercolor floral ribbon motif"
-          fill
-          sizes="10vw"
-          className="object-contain"
-        />
-      </div>
-
-      {/* 4. Bottom-Left Curved Burgundy Botanical Corner Overlay */}
-      <div className="absolute bottom-0 left-0 w-[22vw] max-w-[320px] aspect-square pointer-events-none z-20">
+      {/* 3. Bottom-Left Curved Burgundy Botanical Corner Overlay (Scaled down to corner) */}
+      <motion.div
+        variants={cornerOverlayVariants}
+        className="absolute bottom-0 left-0 w-[13vw] max-w-[190px] aspect-square pointer-events-none z-10"
+      >
         <Image
           src="/new-arrivals/corner-overlay.png"
           alt="Burgundy botanical corner crest"
           fill
-          sizes="25vw"
+          sizes="15vw"
           className="object-contain object-left-bottom"
         />
-      </div>
+      </motion.div>
 
-      {/* 5. Main Content Container */}
+      {/* 4. Main Content Container */}
       <div className="relative w-full h-full z-20 flex flex-col justify-between px-[3.5%] pt-[8.5%] pb-[3.5%]">
-        <div className="w-full h-full grid grid-cols-12 gap-[2.5vw] items-stretch">
+        <div className="w-full h-full grid grid-cols-12 gap-[2.5vw] items-start">
           
-          {/* LEFT EDITORIAL COLUMN (3.5 / 12 cols) */}
-          <div className="col-span-12 lg:col-span-4 xl:col-span-3 flex flex-col justify-between z-30 pr-2">
+          {/* LEFT EDITORIAL COLUMN (Animated slide in from left) */}
+          <motion.div
+            variants={editorialVariants}
+            className="col-span-12 lg:col-span-4 xl:col-span-3 flex flex-col justify-between z-30 pr-2 pt-0"
+          >
             
-            {/* Top Text Block */}
-            <div className="space-y-[1.2vw]">
-              {/* Eyebrow */}
-              <div className="flex items-center gap-2">
-                <span className="text-[#A47148] text-xs">◈</span>
-                <span className="font-sans text-[clamp(10px,0.85vw,13px)] tracking-[0.38em] uppercase text-[#8D6E63] font-medium">
+            {/* Top Text Block with Embedded Aligned Watercolor Ribbon */}
+            <div className="relative space-y-[1.1vw] pt-0">
+              {/* Watercolor Ribbon: top aligned at exact same level */}
+              <div className="absolute -top-1.5 right-[-1.5vw] w-[5.5vw] max-w-[90px] aspect-[2/3] pointer-events-none z-10 opacity-95 mix-blend-multiply">
+                <Image
+                  src="/new-arrivals/watercolor-ribbon.png"
+                  alt="Watercolor floral ribbon motif"
+                  fill
+                  sizes="10vw"
+                  className="object-contain object-top"
+                />
+              </div>
+
+              {/* Eyebrow: aligned with top of cards */}
+              <div className="flex items-center gap-2 pt-0.5">
+                <span className="text-[#A47148] text-xs leading-none">◈</span>
+                <span className="font-sans text-[clamp(10px,0.82vw,12px)] tracking-[0.38em] uppercase text-[#8D6E63] font-medium leading-none">
                   NEW ARRIVALS
                 </span>
               </div>
 
               {/* Main Headline */}
-              <h2 className="font-serif text-[clamp(28px,3.2vw,48px)] font-normal text-[#2A0C14] leading-[1.08] tracking-[0.02em]">
+              <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#2A0C14] leading-[1.08] tracking-[0.02em]">
                 Fresh Weaves,
                 <br />
                 <span className="italic font-light">Timeless Grace</span>
@@ -201,19 +274,19 @@ export default function NewArrivalsSection() {
               </div>
 
               {/* Body Text */}
-              <p className="font-sans text-[clamp(11px,0.88vw,14px)] text-[#5A3A40]/90 leading-relaxed max-w-[280px]">
+              <p className="font-sans text-[clamp(11px,0.85vw,13px)] text-[#5A3A40]/90 leading-relaxed max-w-[280px]">
                 Contemporary designs with
                 <br />
                 a touch of tradition & elegance
               </p>
 
               {/* Pill CTA Button */}
-              <div className="pt-2">
+              <div className="pt-1">
                 <a
                   href="#collection"
-                  className="group inline-flex items-center justify-between gap-4 px-[1.8vw] py-[0.85vw] rounded-full bg-[#4A101D] text-[#FAF6F0] hover:bg-[#340912] transition-all duration-300 shadow-[0_6px_20px_rgba(74,16,29,0.25)] hover:shadow-[0_8px_25px_rgba(74,16,29,0.35)] focus:outline-none"
+                  className="group inline-flex items-center justify-between gap-4 px-[1.8vw] py-[0.8vw] rounded-full bg-[#4A101D] text-[#FAF6F0] hover:bg-[#340912] transition-all duration-300 shadow-[0_6px_20px_rgba(74,16,29,0.25)] hover:shadow-[0_8px_25px_rgba(74,16,29,0.35)] focus:outline-none"
                 >
-                  <span className="font-sans text-[clamp(9px,0.75vw,11px)] font-semibold tracking-[0.24em] uppercase">
+                  <span className="font-sans text-[clamp(9px,0.72vw,11px)] font-semibold tracking-[0.24em] uppercase">
                     DISCOVER OUR ARRIVALS
                   </span>
                   <svg
@@ -227,73 +300,66 @@ export default function NewArrivalsSection() {
                   </svg>
                 </a>
               </div>
+
+              {/* Category Sub-Navigation List (Shifted upwards cleanly below CTA button) */}
+              <nav
+                aria-label="New Arrivals Categories"
+                className="pt-[1.5vw] space-y-[0.55vw] z-30"
+              >
+                {categories.map((cat) => {
+                  const isActive = activeCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setActiveCategory(cat);
+                        const targetIndex = sareeCollection.findIndex((s) => s.category === cat);
+                        if (targetIndex !== -1) setCurrentIndex(targetIndex);
+                      }}
+                      className="group block text-left w-full focus:outline-none cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span
+                          className={`h-[1.5px] transition-all duration-300 ${
+                            isActive
+                              ? "w-6 bg-[#A47148]"
+                              : "w-0 group-hover:w-3.5 bg-[#A47148]/60"
+                          }`}
+                        />
+                        <span
+                          className={`font-sans text-[clamp(11px,0.85vw,13px)] tracking-[0.28em] uppercase transition-colors duration-200 ${
+                            isActive
+                              ? "text-[#2A0C14] font-bold"
+                              : "text-[#4A252E] font-medium hover:text-[#2A0C14]"
+                          }`}
+                        >
+                          {cat}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </nav>
             </div>
+          </motion.div>
 
-            {/* Bottom Category Sub-Navigation List */}
-            <nav
-              aria-label="New Arrivals Categories"
-              className="mt-auto pt-6 space-y-[0.7vw] z-30"
-            >
-              {categories.map((cat) => {
-                const isActive = activeCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => {
-                      setActiveCategory(cat);
-                      const targetIndex = sareeCollection.findIndex((s) => s.category === cat);
-                      if (targetIndex !== -1) setCurrentIndex(targetIndex);
-                    }}
-                    className="group block text-left w-full focus:outline-none"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span
-                        className={`h-[1px] transition-all duration-300 ${
-                          isActive
-                            ? "w-5 bg-[#A47148]"
-                            : "w-0 group-hover:w-3 bg-[#A47148]/60"
-                        }`}
-                      />
-                      <span
-                        className={`font-sans text-[clamp(10px,0.8vw,12px)] tracking-[0.26em] uppercase transition-colors duration-200 ${
-                          isActive
-                            ? "text-[#4A101D] font-semibold"
-                            : "text-[#6D4C53] hover:text-[#4A101D]"
-                        }`}
-                      >
-                        {cat}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-
-          {/* RIGHT 4-COLUMN CARDS SHOWCASE (8.5 / 12 cols) */}
+          {/* RIGHT 4-COLUMN CARDS SHOWCASE */}
           <div className="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col justify-between h-full">
             
-            {/* 4 Cards Row */}
+            {/* 4 Cards Row (Cascading upwards on scroll with ease [0.22, 1, 0.36, 1]) */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-[1.2vw] items-stretch h-[85%]">
               {sareeCollection.map((saree, idx) => {
                 const isSelected = currentIndex === idx;
                 return (
                   <motion.div
                     key={saree.id}
+                    custom={idx}
+                    variants={cardCascadeVariants}
                     className="relative flex flex-col h-full group cursor-pointer"
-                    onMouseEnter={() => setHoveredCard(saree.id)}
-                    onMouseLeave={() => setHoveredCard(null)}
                     onClick={() => {
                       setCurrentIndex(idx);
                       setActiveCategory(saree.category);
-                    }}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.8,
-                      delay: 0.15 + idx * 0.1,
-                      ease: [0.22, 1, 0.36, 1],
                     }}
                   >
                     {/* Portrait Image Container */}
@@ -306,16 +372,16 @@ export default function NewArrivalsSection() {
                         className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       
-                      {/* Subtle hover gradient */}
+                      {/* Hover ambient sheen */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
                     {/* Card Label & Subtitle Below */}
                     <div className="pt-[0.9vw] text-center flex flex-col items-center select-none">
-                      <h3 className="font-sans text-[clamp(11px,0.88vw,14px)] font-medium tracking-[0.24em] text-[#2A0C14] uppercase">
+                      <h3 className="font-sans text-[clamp(11px,0.85vw,13px)] font-medium tracking-[0.24em] text-[#2A0C14] uppercase">
                         {saree.name}
                       </h3>
-                      <p className="font-serif italic text-[clamp(10px,0.8vw,13px)] text-[#7A5860] mt-0.5 tracking-wide">
+                      <p className="font-serif italic text-[clamp(10px,0.78vw,12px)] text-[#7A5860] mt-0.5 tracking-wide">
                         {saree.subtitle}
                       </p>
                       
@@ -340,7 +406,7 @@ export default function NewArrivalsSection() {
                 type="button"
                 onClick={handlePrev}
                 aria-label="Previous saree"
-                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none"
+                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -359,7 +425,7 @@ export default function NewArrivalsSection() {
                 type="button"
                 onClick={handleNext}
                 aria-label="Next saree"
-                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none"
+                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none cursor-pointer"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -371,6 +437,6 @@ export default function NewArrivalsSection() {
 
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -7,6 +7,7 @@ import VideoLoader from "@/components/loader/VideoLoader";
 import NewArrivalsSection from "@/components/new-arrivals/NewArrivalsSection";
 import HeritageSection from "@/components/heritage/HeritageSection";
 import CorridorSection from "@/components/corridor/CorridorSection";
+import ContactSplitSection from "@/components/contact/ContactSplitSection";
 
 const SilkWeave = dynamic(() => import("@/components/silk/SilkWeave"), {
   ssr: false,
@@ -23,6 +24,7 @@ export default function Home() {
       <HeritageSection />
       <CorridorSection />
       <SilkWeave />
+      <ContactSplitSection />
     </main>
   );
 }

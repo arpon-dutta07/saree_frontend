@@ -5,6 +5,7 @@ import Hero from "@/components/hero/Hero";
 import VideoLoader from "@/components/loader/VideoLoader";
 import NewArrivalsSection from "@/components/new-arrivals/NewArrivalsSection";
 import HeritageSection from "@/components/heritage/HeritageSection";
+import SilkWeave from "@/components/silk/SilkWeave";
 
 export default function Home() {
   const [hasCompletedIntro, setHasCompletedIntro] = useState(false);
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero startAnimation={hasCompletedIntro} />
       <NewArrivalsSection />
       <HeritageSection />
+      <SilkWeave />
     </main>
   );
 }

@@ -20,7 +20,11 @@ import HeroModels from "./HeroModels";
 import HeroRightLanterns from "./HeroRightLanterns";
 import HeroBottomFloral from "./HeroBottomFloral";
 
-export default function Hero() {
+interface HeroProps {
+  startAnimation?: boolean;
+}
+
+export default function Hero({ startAnimation = true }: HeroProps) {
   return (
     <div className="relative w-full aspect-[16/9] max-h-screen overflow-hidden bg-[#140306] select-none mx-auto">
       {/* 1. Background base image — 0% top, 0% left, 100% width, 100% height, z-index 0, static instant */}
@@ -31,7 +35,7 @@ export default function Hero() {
         className="relative w-full h-full"
         variants={heroContainerVariants}
         initial="hidden"
-        animate="visible"
+        animate={startAnimation ? "visible" : "hidden"}
       >
         {/* 2. Navbar — top: 0%, left: 0%, width: 100%, height: 11%, z-index 50 */}
         <motion.div

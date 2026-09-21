@@ -73,13 +73,13 @@ export default function HeroNavbar() {
           {/* Desktop Nav Pill */}
           <nav
             aria-label="Main Navigation"
-            className="hidden md:flex items-center gap-[1.8vw] px-[2.2vw] py-[0.5vw] rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37]/20 shadow-md"
+            className="hidden md:flex flex-nowrap items-center gap-[1.2vw] lg:gap-[1.6vw] xl:gap-[1.8vw] px-[1.6vw] lg:px-[2.2vw] py-[0.45vw] lg:py-[0.5vw] rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37]/20 shadow-md"
           >
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-[clamp(10px,0.85vw,12px)] font-sans font-medium tracking-[0.2em] text-[#FAF6F0]/85 hover:text-[#D4AF37] transition-colors duration-200"
+                className="whitespace-nowrap text-[clamp(9.5px,0.78vw,11.5px)] font-sans font-medium tracking-[0.16em] lg:tracking-[0.2em] text-[#FAF6F0]/85 hover:text-[#D4AF37] transition-colors duration-200 leading-none"
               >
                 {link.label}
               </a>

@@ -8,7 +8,8 @@ export const LUXURY_EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
  * Editorial masked title reveal.
- * Glides up from an overflow mask when scrolled into view.
+ * Glides smoothly up from subtle 24px offset with opacity fade when scrolled into view.
+ * Fully compatible with Framer Motion parent variant propagation (hidden/visible).
  */
 export function EditorialTitleReveal({
   children,
@@ -20,20 +21,26 @@ export function EditorialTitleReveal({
   delay?: number;
 }) {
   return (
-    <div className={`overflow-hidden inline-block ${className}`}>
-      <motion.div
-        initial={{ y: "115%", opacity: 0 }}
-        whileInView={{ y: "0%", opacity: 1 }}
-        viewport={{ once: true, margin: "-8%" }}
-        transition={{
-          duration: 0.9,
-          ease: LUXURY_EASE,
-          delay,
-        }}
-      >
-        {children}
-      </motion.div>
-    </div>
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 24 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: 0.9,
+            ease: LUXURY_EASE,
+            delay,
+          },
+        },
+      }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      className={`block w-full ${className}`}
+    >
+      {children}
+    </motion.div>
   );
 }
 
@@ -51,23 +58,25 @@ export function EditorialBlockReveal({
   delay?: number;
   direction?: "up" | "down" | "fade";
 }) {
-  const initial =
-    direction === "up"
-      ? { y: 28, opacity: 0 }
-      : direction === "down"
-      ? { y: -20, opacity: 0 }
-      : { y: 0, opacity: 0 };
+  const yOffset = direction === "up" ? 20 : direction === "down" ? -16 : 0;
 
   return (
     <motion.div
-      initial={initial}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true, margin: "-8%" }}
-      transition={{
-        duration: 0.85,
-        ease: LUXURY_EASE,
-        delay,
+      variants={{
+        hidden: { opacity: 0, y: yOffset },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: 0.85,
+            ease: LUXURY_EASE,
+            delay,
+          },
+        },
       }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
       className={className}
     >
       {children}
@@ -77,7 +86,7 @@ export function EditorialBlockReveal({
 
 /**
  * Stagger item wrapper for product cards, gallery items, etc.
- * Features subtle scale-up (0.96 -> 1) and gentle upward float.
+ * Features subtle scale-up (0.98 -> 1) and gentle upward float.
  */
 export function StaggerCard({
   children,
@@ -90,14 +99,22 @@ export function StaggerCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 35, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-6%" }}
-      transition={{
-        duration: 0.85,
-        delay: (index % 4) * 0.12,
-        ease: LUXURY_EASE,
+      variants={{
+        hidden: { opacity: 0, y: 28, scale: 0.98 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: {
+            duration: 0.85,
+            delay: (index % 4) * 0.1,
+            ease: LUXURY_EASE,
+          },
+        },
       }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
       className={className}
     >
       {children}

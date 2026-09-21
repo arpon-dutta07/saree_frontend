@@ -171,13 +171,13 @@ export default function HeritageSection() {
         {/* Nav Links - Signature Offwhite (#FAF6F0) */}
         <nav
           aria-label="Heritage Navigation"
-          className="flex items-center gap-[2.2vw]"
+          className="flex flex-nowrap items-center gap-[1.6vw] lg:gap-[2.2vw]"
         >
           {["SAREES", "NEW ARRIVALS", "COLLECTIONS", "ABOUT", "JOURNAL", "CONTACT"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`text-[clamp(10px,0.82vw,12px)] font-serif tracking-[0.2em] transition-colors duration-200 ${
+              className={`whitespace-nowrap text-[clamp(10px,0.82vw,12px)] font-serif tracking-[0.2em] transition-colors duration-200 leading-none ${
                 item === "COLLECTIONS" ? "text-[#FAF6F0] font-semibold border-b border-[#FAF6F0]/60 pb-0.5" : "text-[#FAF6F0]/70 hover:text-[#FAF6F0]"
               }`}
             >

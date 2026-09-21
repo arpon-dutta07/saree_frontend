@@ -176,13 +176,13 @@ export default function NewArrivalsSection() {
         {/* Nav Links */}
         <nav
           aria-label="New Arrivals Navigation"
-          className="flex items-center gap-[2.2vw]"
+          className="flex flex-nowrap items-center gap-[1.6vw] lg:gap-[2.2vw]"
         >
           {["SAREES", "NEW ARRIVALS", "COLLECTIONS", "ABOUT", "JOURNAL", "CONTACT"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-              className={`text-[clamp(10px,0.82vw,12px)] font-serif tracking-[0.2em] transition-colors duration-200 ${
+              className={`whitespace-nowrap text-[clamp(10px,0.82vw,12px)] font-serif tracking-[0.2em] transition-colors duration-200 leading-none ${
                 item === "NEW ARRIVALS" ? "text-[#3A121A] font-semibold" : "text-[#5A3A40] hover:text-[#3A121A]"
               }`}
             >

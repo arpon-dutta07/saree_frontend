@@ -87,7 +87,7 @@ export default function ContactSplitSection() {
 
   return (
     <section
-      id="atelier"
+      id="private-styling"
       ref={rootRef}
       className={`va-root ${isInView ? "va-active" : ""}`}
       onPointerMove={handlePointerMove}
@@ -681,9 +681,9 @@ export default function ContactSplitSection() {
             }
 
             /* ── Mobile Responsive Rules ────────────────────────────────── */
-            @media (max-width: 650px) {
+            @media (max-width: 768px) {
               .va-root {
-                min-height: 600px;
+                min-height: 580px;
               }
 
               .va-panels {
@@ -695,12 +695,13 @@ export default function ContactSplitSection() {
               .va-panel-right {
                 clip-path: none !important;
                 animation: none !important;
-                padding: 24px 16px;
+                padding: 20px 14px;
               }
 
               .va-portrait-frame {
-                width: 86%;
-                height: 80%;
+                width: 90%;
+                height: 85%;
+                border-radius: 16px;
               }
 
               .va-center-line {
@@ -725,12 +726,12 @@ export default function ContactSplitSection() {
               }
 
               .va-topbar {
-                height: 70px;
-                padding: 18px 14px 0;
+                height: 64px;
+                padding: 14px 14px 0;
               }
 
               .va-brand {
-                top: -6px;
+                top: -4px;
               }
 
               .va-seal-wrap {
@@ -740,33 +741,44 @@ export default function ContactSplitSection() {
               }
 
               .va-brand-name {
-                font-size: 18px;
+                font-size: 17px;
               }
 
               .va-brand-subtitle {
-                margin-top: 3px;
-                font-size: 5.5px;
+                margin-top: 2px;
+                font-size: 6px;
               }
 
               .va-nav-link {
-                font-size: 8px;
+                font-size: 9px;
               }
 
               .va-title {
-                font-size: clamp(20px, 5.5vw, 26px);
+                font-size: clamp(22px, 6vw, 32px);
               }
 
               .va-title-left {
-                top: 72px;
-              }
-
-              .va-title-right {
-                bottom: 18px;
+                top: clamp(68px, 10.5vh, 88px);
               }
 
               .va-card-area {
                 top: 50%;
-                width: clamp(110px, 30vw, 140px);
+                width: clamp(140px, 38vw, 185px);
+              }
+
+              .va-bottom-left {
+                left: 14px;
+                bottom: 12px;
+                font-size: 8.5px;
+                letter-spacing: 0.12em;
+              }
+
+              .va-bottom-right {
+                right: 14px;
+                bottom: 12px;
+                font-size: 8.5px;
+                gap: 6px;
+                letter-spacing: 0.12em;
               }
             }
           `,

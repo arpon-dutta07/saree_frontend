@@ -40,12 +40,15 @@ export default function Hero({ startAnimation = true }: HeroProps) {
   return (
     <div
       ref={heroRef}
-      className="relative w-full aspect-[16/9] max-h-screen overflow-hidden bg-[#140306] select-none mx-auto"
+      className="relative w-full h-[100svh] min-h-[660px] md:h-auto md:aspect-[16/9] md:max-h-screen overflow-hidden bg-[#140306] select-none mx-auto"
     >
       {/* 1. Background base image with smooth depth parallax */}
       <motion.div style={{ y: yBg }} className="absolute inset-0 w-full h-full">
         <HeroBackground />
       </motion.div>
+
+      {/* Mobile Subtle Dark Gradient for Text Legibility */}
+      <div className="md:hidden absolute inset-0 bg-gradient-to-b from-[#140306]/90 via-[#140306]/40 to-[#140306]/85 pointer-events-none z-10" />
 
       {/* Stagger Container */}
       <motion.section
@@ -55,74 +58,79 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         animate={startAnimation ? "visible" : "hidden"}
         style={{ opacity: opacityFade }}
       >
-        {/* 2. Navbar — top: 0%, left: 0%, width: 100%, height: 11%, z-index 50 */}
+        {/* 2. Navbar */}
         <motion.div
           variants={heroNavbarVariants}
-          style={{ position: "absolute", top: "0%", left: "0%", width: "100%", height: "11%", zIndex: 50 }}
+          className="absolute top-0 left-0 w-full h-16 md:h-[11%] z-50"
         >
           <HeroNavbar />
         </motion.div>
 
-        {/* 3. Left floral vine — top: 0%, left: 0%, width: 17%, height: 100%, z-index 20 (much larger) */}
+        {/* 3. Left floral vine — desktop/tablet */}
         <motion.div
           variants={heroLeftFloralVariants}
-          style={{ position: "absolute", top: "0%", left: "0%", width: "17%", height: "100%", zIndex: 20 }}
+          className="hidden md:block absolute top-0 left-0 w-[17%] h-full z-20 pointer-events-none"
         >
           <HeroLeftFloral />
         </motion.div>
 
-        {/* 4. Headline block — top: 21%, left: 13.5%, width: 40%, height: 30%, z-index 30 */}
+        {/* 4. Headline block */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", top: "21%", left: "13.5%", width: "40%", height: "30%", zIndex: 30, y: yHeadline }}
+          style={{ y: yHeadline }}
+          className="absolute top-[16%] sm:top-[18%] md:top-[21%] left-5 sm:left-8 md:left-[13.5%] w-[calc(100%-40px)] sm:w-[85%] md:w-[40%] md:h-[30%] z-30"
         >
           <HeroHeadline />
         </motion.div>
 
-        {/* 5. CTA pill button — top: 53%, left: 13.5%, width: 27%, height: 7%, z-index 30 */}
+        {/* 5. CTA pill button */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", top: "53%", left: "13.5%", width: "27%", height: "7%", zIndex: 30, y: yHeadline }}
+          style={{ y: yHeadline }}
+          className="absolute top-[43%] sm:top-[46%] md:top-[53%] left-5 sm:left-8 md:left-[13.5%] w-auto min-w-[240px] max-w-[280px] md:w-[27%] md:h-[7%] z-30"
         >
           <HeroCTA />
         </motion.div>
 
-        {/* 6. Trust row — top: 63%, left: 13.5%, z-index 30 */}
+        {/* 6. Trust row */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", top: "63%", left: "13.5%", zIndex: 30, y: yHeadline }}
+          style={{ y: yHeadline }}
+          className="absolute bottom-5 sm:bottom-7 md:bottom-auto md:top-[63%] left-4 right-4 md:right-auto md:left-[13.5%] flex justify-center md:justify-start z-30"
         >
           <HeroTrustRow />
         </motion.div>
 
-        {/* 7. Model 1 — red saree (seated) — bottom: 0%, left: 36.5%, width: 36.5%, height: 71%, z-index 24 */}
+        {/* 7. Model 1 — red saree (seated) */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", bottom: "0%", left: "36.5%", width: "36.5%", height: "71%", zIndex: 24, y: yModels }}
+          style={{ y: yModels }}
+          className="absolute bottom-14 sm:bottom-16 md:bottom-0 right-[-12%] sm:right-[-4%] md:left-[36.5%] md:right-auto w-[82%] sm:w-[65%] md:w-[36.5%] h-[54%] sm:h-[62%] md:h-[71%] z-20 pointer-events-none opacity-90 md:opacity-100"
         >
           <HeroModels model="red" />
         </motion.div>
 
-        {/* 8. Model 2 — black saree (standing) — bottom: 0%, left: 58.5%, width: 17.5%, height: 91%, z-index 26 (on top of Model 1) */}
+        {/* 8. Model 2 — black saree (standing) */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", bottom: "0%", left: "58.5%", width: "17.5%", height: "91%", zIndex: 26, y: yModels }}
+          style={{ y: yModels }}
+          className="hidden sm:block absolute bottom-0 right-[28%] md:left-[58.5%] md:right-auto w-[35%] md:w-[17.5%] h-[72%] md:h-[91%] z-24 pointer-events-none opacity-60 sm:opacity-80 md:opacity-100"
         >
           <HeroModels model="black" />
         </motion.div>
 
-        {/* 9. Right lantern element — top: 0%, left: 71%, width: 29%, height: 96%, z-index 20 (much larger presence) */}
+        {/* 9. Right lantern element */}
         <motion.div
           variants={heroRightLanternsVariants}
-          style={{ position: "absolute", top: "0%", left: "71%", width: "29%", height: "96%", zIndex: 20 }}
+          className="hidden md:block absolute top-0 left-[71%] w-[29%] h-[96%] z-20 pointer-events-none"
         >
           <HeroRightLanterns />
         </motion.div>
 
-        {/* 10. Bottom-left floral cluster — bottom: 0%, left: 0%, width: 35%, height: 38%, z-index 40 (much larger) */}
+        {/* 10. Bottom-left floral cluster */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", bottom: "0%", left: "0%", width: "35%", height: "38%", zIndex: 40 }}
+          className="hidden md:block absolute bottom-0 left-0 w-[35%] h-[38%] z-40 pointer-events-none"
         >
           <HeroBottomFloral />
         </motion.div>

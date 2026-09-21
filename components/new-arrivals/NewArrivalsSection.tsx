@@ -134,11 +134,11 @@ export default function NewArrivalsSection() {
   return (
     <motion.section
       id="new-arrivals"
-      className="relative w-full aspect-[16/9] max-h-screen min-h-[700px] overflow-hidden bg-[#FBF7F0] text-[#341118] select-none mx-auto"
+      className="relative w-full h-auto min-h-0 lg:aspect-[16/9] lg:max-h-screen lg:min-h-[700px] overflow-hidden bg-[#FBF7F0] text-[#341118] select-none mx-auto py-10 lg:py-0"
       variants={sectionContainerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15 }}
     >
       {/* 1. Base Textured Paper Background Plate */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
@@ -153,18 +153,18 @@ export default function NewArrivalsSection() {
         <div className="absolute inset-0 bg-[#FBF7F0]/30 mix-blend-multiply pointer-events-none" />
       </div>
 
-      {/* 2. Top Navigation Bar (Animated slide down) */}
+      {/* 2. Top Navigation Bar (Desktop only) */}
       <motion.header
         variants={headerVariants}
-        className="absolute top-0 left-0 right-0 h-[11%] px-[3.5%] flex items-center justify-between z-40 select-none"
+        className="hidden lg:flex absolute top-0 left-0 right-0 h-[11%] px-[3.5%] items-center justify-between z-40 select-none"
       >
         {/* Brand Monogram Seal */}
-        <a href="#" className="flex-shrink-0 group focus:outline-none h-[75%] aspect-square" aria-label="CG Luxury Sarees Home">
+        <a href="#" className="flex-shrink-0 group focus:outline-none h-[75%] aspect-square" aria-label="Aarohi Luxury Sarees Home">
           <div className="w-full h-full rounded-full bg-[#FAF6F0] p-[8%] flex items-center justify-center shadow-md border border-[#D4AF37]/30 transition-transform duration-300 group-hover:scale-105">
             <div className="relative w-full h-full">
               <Image
                 src="/hero/logo-mark.png"
-                alt="CG Monogram Seal"
+                alt="Aarohi Monogram Seal"
                 fill
                 className="object-contain"
                 priority
@@ -176,7 +176,7 @@ export default function NewArrivalsSection() {
         {/* Nav Links */}
         <nav
           aria-label="New Arrivals Navigation"
-          className="hidden md:flex items-center gap-[2.2vw]"
+          className="flex items-center gap-[2.2vw]"
         >
           {["SAREES", "NEW ARRIVALS", "COLLECTIONS", "ABOUT", "JOURNAL", "CONTACT"].map((item) => (
             <a
@@ -193,19 +193,19 @@ export default function NewArrivalsSection() {
 
         {/* Action Icons */}
         <div className="flex items-center gap-[1.4vw] text-[#3A121A]">
-          <button type="button" aria-label="Search" className="p-1 hover:opacity-75 focus:outline-none">
+          <button type="button" aria-label="Search" className="p-1 hover:opacity-75 focus:outline-none cursor-pointer">
             <svg className="w-[1.3vw] min-w-[16px] h-[1.3vw] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
               <circle cx="11" cy="11" r="7" />
               <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
             </svg>
           </button>
-          <button type="button" aria-label="Account" className="p-1 hover:opacity-75 focus:outline-none">
+          <button type="button" aria-label="Account" className="p-1 hover:opacity-75 focus:outline-none cursor-pointer">
             <svg className="w-[1.3vw] min-w-[16px] h-[1.3vw] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" strokeLinecap="round" />
               <circle cx="12" cy="7" r="4" />
             </svg>
           </button>
-          <button type="button" aria-label="Cart" className="relative p-1 hover:opacity-75 focus:outline-none">
+          <button type="button" aria-label="Cart" className="relative p-1 hover:opacity-75 focus:outline-none cursor-pointer">
             <svg className="w-[1.3vw] min-w-[16px] h-[1.3vw] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
               <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M3 6h18" />
@@ -218,10 +218,10 @@ export default function NewArrivalsSection() {
         </div>
       </motion.header>
 
-      {/* 3. Bottom-Left Curved Burgundy Botanical Corner Overlay (Scaled down to corner) */}
+      {/* 3. Bottom-Left Curved Burgundy Botanical Corner Overlay */}
       <motion.div
         variants={cornerOverlayVariants}
-        className="absolute bottom-0 left-0 w-[13vw] max-w-[190px] aspect-square pointer-events-none z-10"
+        className="hidden md:block absolute bottom-0 left-0 w-[13vw] max-w-[190px] aspect-square pointer-events-none z-10"
       >
         <Image
           src="/new-arrivals/corner-overlay.png"
@@ -233,19 +233,18 @@ export default function NewArrivalsSection() {
       </motion.div>
 
       {/* 4. Main Content Container */}
-      <div className="relative w-full h-full z-20 flex flex-col justify-between px-[3.5%] pt-[8.5%] pb-[3.5%]">
-        <div className="w-full h-full grid grid-cols-12 gap-[2.5vw] items-start">
+      <div className="relative w-full h-full z-20 flex flex-col justify-between px-5 sm:px-8 lg:px-[3.5%] pt-2 lg:pt-[8.5%] pb-6 lg:pb-[3.5%]">
+        <div className="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[2.5vw] items-start">
           
-          {/* LEFT EDITORIAL COLUMN (Animated slide in from left) */}
+          {/* LEFT EDITORIAL COLUMN */}
           <motion.div
             variants={editorialVariants}
-            className="col-span-12 lg:col-span-4 xl:col-span-3 flex flex-col justify-between z-30 pr-2 pt-0"
+            className="col-span-1 lg:col-span-4 xl:col-span-3 flex flex-col justify-between z-30 pr-0 lg:pr-2 pt-0"
           >
-            
-            {/* Top Text Block with Embedded Aligned Watercolor Ribbon */}
-            <div className="relative space-y-[1.1vw] pt-0">
-              {/* Watercolor Ribbon: top aligned at exact same level */}
-              <div className="absolute -top-1.5 right-[-1.5vw] w-[5.5vw] max-w-[90px] aspect-[2/3] pointer-events-none z-10 opacity-95 mix-blend-multiply">
+            {/* Top Text Block */}
+            <div className="relative space-y-3 lg:space-y-[1.1vw] pt-0">
+              {/* Watercolor Ribbon */}
+              <div className="absolute -top-1.5 right-0 lg:-right-[1.5vw] w-14 lg:w-[5.5vw] max-w-[90px] aspect-[2/3] pointer-events-none z-10 opacity-95 mix-blend-multiply">
                 <Image
                   src="/new-arrivals/watercolor-ribbon.png"
                   alt="Watercolor floral ribbon motif"
@@ -255,7 +254,7 @@ export default function NewArrivalsSection() {
                 />
               </div>
 
-              {/* Eyebrow: aligned with top of cards */}
+              {/* Eyebrow */}
               <div className="flex items-center gap-2 pt-0.5">
                 <span className="text-[#A47148] text-xs leading-none">◈</span>
                 <span className="font-sans text-[clamp(10px,0.82vw,12px)] tracking-[0.38em] uppercase text-[#8D6E63] font-medium leading-none">
@@ -277,19 +276,17 @@ export default function NewArrivalsSection() {
               </div>
 
               {/* Body Text */}
-              <p className="font-sans text-[clamp(11px,0.85vw,13px)] text-[#5A3A40]/90 leading-relaxed max-w-[280px]">
-                Contemporary designs with
-                <br />
-                a touch of tradition & elegance
+              <p className="font-sans text-[clamp(12px,0.85vw,13.5px)] text-[#5A3A40]/90 leading-relaxed max-w-[320px]">
+                Contemporary designs with a touch of sacred Indian tradition &amp; regal drape craftsmanship.
               </p>
 
               {/* Pill CTA Button */}
               <div className="pt-1">
                 <a
                   href="#collection"
-                  className="group inline-flex items-center justify-between gap-4 px-[1.8vw] py-[0.8vw] rounded-full bg-[#4A101D] text-[#FAF6F0] hover:bg-[#340912] transition-all duration-300 shadow-[0_6px_20px_rgba(74,16,29,0.25)] hover:shadow-[0_8px_25px_rgba(74,16,29,0.35)] focus:outline-none"
+                  className="group inline-flex items-center justify-between gap-4 px-6 py-2.5 lg:px-[1.8vw] lg:py-[0.8vw] rounded-full bg-[#4A101D] text-[#FAF6F0] hover:bg-[#340912] transition-all duration-300 shadow-[0_6px_20px_rgba(74,16,29,0.25)] hover:shadow-[0_8px_25px_rgba(74,16,29,0.35)] focus:outline-none cursor-pointer"
                 >
-                  <span className="font-sans text-[clamp(9px,0.72vw,11px)] font-semibold tracking-[0.24em] uppercase">
+                  <span className="font-sans text-[clamp(9.5px,0.72vw,11px)] font-semibold tracking-[0.24em] uppercase">
                     DISCOVER OUR ARRIVALS
                   </span>
                   <svg
@@ -304,10 +301,10 @@ export default function NewArrivalsSection() {
                 </a>
               </div>
 
-              {/* Category Sub-Navigation List (Shifted upwards cleanly below CTA button) */}
+              {/* Category Sub-Navigation List */}
               <nav
                 aria-label="New Arrivals Categories"
-                className="pt-[1.5vw] space-y-[0.55vw] z-30"
+                className="pt-2 lg:pt-[1.5vw] flex lg:flex-col flex-wrap gap-2 lg:gap-0 lg:space-y-[0.55vw] z-30"
               >
                 {categories.map((cat) => {
                   const isActive = activeCategory === cat;
@@ -320,21 +317,21 @@ export default function NewArrivalsSection() {
                         const targetIndex = sareeCollection.findIndex((s) => s.category === cat);
                         if (targetIndex !== -1) setCurrentIndex(targetIndex);
                       }}
-                      className="group block text-left w-full focus:outline-none cursor-pointer"
+                      className="group block text-left focus:outline-none cursor-pointer"
                     >
-                      <div className="flex items-center gap-2.5">
+                      <div className="flex items-center gap-2 px-3 py-1.5 lg:px-0 lg:py-0 rounded-full lg:rounded-none bg-[#FAF6F0] lg:bg-transparent border border-[#A47148]/20 lg:border-none shadow-xs lg:shadow-none">
                         <span
-                          className={`h-[1.5px] transition-all duration-300 ${
+                          className={`hidden lg:block h-[1.5px] transition-all duration-300 ${
                             isActive
                               ? "w-6 bg-[#A47148]"
                               : "w-0 group-hover:w-3.5 bg-[#A47148]/60"
                           }`}
                         />
                         <span
-                          className={`font-sans text-[clamp(11px,0.85vw,13px)] tracking-[0.28em] uppercase transition-colors duration-200 ${
+                          className={`font-sans text-[11px] lg:text-[clamp(11px,0.85vw,13px)] tracking-[0.22em] lg:tracking-[0.28em] uppercase transition-colors duration-200 ${
                             isActive
                               ? "text-[#2A0C14] font-bold"
-                              : "text-[#4A252E] font-medium hover:text-[#2A0C14]"
+                              : "text-[#7A5860] font-medium hover:text-[#2A0C14]"
                           }`}
                         >
                           {cat}
@@ -348,10 +345,10 @@ export default function NewArrivalsSection() {
           </motion.div>
 
           {/* RIGHT 4-COLUMN CARDS SHOWCASE */}
-          <div className="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col justify-between h-full">
+          <div className="col-span-1 lg:col-span-8 xl:col-span-9 flex flex-col justify-between h-full w-full">
             
-            {/* 4 Cards Row (Cascading upwards on scroll with ease [0.22, 1, 0.36, 1]) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-[1.2vw] items-stretch h-[85%]">
+            {/* 4 Cards Row: Mobile horizontal snap carousel, desktop 4-col grid */}
+            <div className="flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-none gap-4 lg:gap-[1.2vw] items-stretch h-[390px] sm:h-[430px] lg:h-[85%] pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0 grid-cols-2 md:grid-cols-4">
               {sareeCollection.map((saree, idx) => {
                 const isSelected = currentIndex === idx;
                 return (
@@ -359,7 +356,7 @@ export default function NewArrivalsSection() {
                     key={saree.id}
                     custom={idx}
                     variants={cardCascadeVariants}
-                    className="relative flex flex-col h-full group cursor-pointer"
+                    className="shrink-0 w-[220px] sm:w-[260px] lg:w-auto snap-center relative flex flex-col h-full group cursor-pointer"
                     onClick={() => {
                       setCurrentIndex(idx);
                       setActiveCategory(saree.category);
@@ -371,7 +368,7 @@ export default function NewArrivalsSection() {
                         src={saree.image}
                         alt={`${saree.name} - ${saree.subtitle}`}
                         fill
-                        sizes="(max-width: 768px) 50vw, 20vw"
+                        sizes="(max-width: 768px) 70vw, 20vw"
                         className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       
@@ -380,7 +377,7 @@ export default function NewArrivalsSection() {
                     </div>
 
                     {/* Card Label & Subtitle Below */}
-                    <div className="pt-[0.9vw] text-center flex flex-col items-center select-none">
+                    <div className="pt-2 lg:pt-[0.9vw] text-center flex flex-col items-center select-none">
                       <h3 className="font-sans text-[clamp(11px,0.85vw,13px)] font-medium tracking-[0.24em] text-[#2A0C14] uppercase">
                         {saree.name}
                       </h3>
@@ -403,37 +400,43 @@ export default function NewArrivalsSection() {
             </div>
 
             {/* Bottom Carousel Navigation Controls (< 01 — 04 >) */}
-            <div className="flex items-center justify-end gap-3 pt-3 select-none">
-              {/* Prev Button */}
-              <button
-                type="button"
-                onClick={handlePrev}
-                aria-label="Previous saree"
-                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none cursor-pointer"
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
+            <div className="flex items-center justify-between lg:justify-end gap-3 pt-3 select-none">
+              <span className="lg:hidden font-sans text-[10px] tracking-[0.2em] text-[#8D6E63] uppercase">
+                Swipe to view ➔
+              </span>
 
-              {/* Counter Display */}
-              <div className="font-serif text-[clamp(11px,0.85vw,13px)] tracking-[0.25em] text-[#4A101D] font-medium px-1">
-                <span>0{currentIndex + 1}</span>
-                <span className="mx-2 opacity-50">—</span>
-                <span className="opacity-60">04</span>
+              <div className="flex items-center gap-3">
+                {/* Prev Button */}
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  aria-label="Previous saree"
+                  className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+
+                {/* Counter Display */}
+                <div className="font-serif text-[clamp(11px,0.85vw,13px)] tracking-[0.25em] text-[#4A101D] font-medium px-1">
+                  <span>0{currentIndex + 1}</span>
+                  <span className="mx-2 opacity-50">—</span>
+                  <span className="opacity-60">04</span>
+                </div>
+
+                {/* Next Button */}
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  aria-label="Next saree"
+                  className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none cursor-pointer"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
-
-              {/* Next Button */}
-              <button
-                type="button"
-                onClick={handleNext}
-                aria-label="Next saree"
-                className="w-8 h-8 rounded-full border border-[#4A101D]/25 text-[#4A101D] flex items-center justify-center hover:bg-[#4A101D] hover:text-[#FAF6F0] transition-all duration-200 focus:outline-none cursor-pointer"
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
             </div>
 
           </div>

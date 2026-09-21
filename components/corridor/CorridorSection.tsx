@@ -89,7 +89,7 @@ export default function CorridorSection() {
       ref={sectionRef}
       id="corridor"
       aria-label="3D Saree Corridor"
-      className="relative w-full h-[100svh] min-h-[720px] overflow-hidden bg-[#FBF7F0] select-none [container-type:inline-size]"
+      className="relative w-full h-[100svh] min-h-[620px] md:min-h-[720px] overflow-hidden bg-[#FBF7F0] select-none [container-type:inline-size]"
     >
       {/* 28-Sample Precision Keyframe Styles */}
       <style
@@ -136,7 +136,7 @@ export default function CorridorSection() {
       </div>
 
       {/* 2. Top-Bar: Compact Brand Mark & Translucent Play/Pause Pill */}
-      <header className="absolute top-0 left-0 right-0 h-[10%] px-[3.5%] flex items-center justify-between z-30 pointer-events-auto">
+      <header className="absolute top-0 left-0 right-0 h-16 md:h-[10%] px-4 sm:px-[3.5%] flex items-center justify-between z-30 pointer-events-auto">
         {/* Brand Mark */}
         <a
           href="#"
@@ -164,43 +164,41 @@ export default function CorridorSection() {
           type="button"
           onClick={() => setIsPaused((prev) => !prev)}
           aria-label={isPaused ? "Resume 3D corridor animation" : "Pause 3D corridor animation"}
-          className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/70 hover:bg-white backdrop-blur-md border border-[#1E0409]/15 shadow-[0_4px_16px_rgba(0,0,0,0.06)] text-[#1E0409] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#8B1E3F]/40 cursor-pointer"
+          className="group inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/75 hover:bg-white backdrop-blur-md border border-[#1E0409]/15 shadow-[0_4px_16px_rgba(0,0,0,0.06)] text-[#1E0409] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#8B1E3F]/40 cursor-pointer"
         >
           {isPaused ? (
             /* Play Icon */
-            <svg
-              className="w-3 h-3 fill-current text-[#8B1E3F]"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-3.5 h-3.5 fill-current text-[#8B1E3F]" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
           ) : (
             /* Pause Icon */
-            <svg
-              className="w-3 h-3 fill-current text-[#8B1E3F]"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-3.5 h-3.5 fill-current text-[#1E0409]" viewBox="0 0 24 24">
               <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
             </svg>
           )}
-          <span className="font-sans text-[10.5px] font-bold tracking-[0.22em] uppercase hidden sm:inline text-[#1E0409]">
-            {isPaused ? "RESUME" : "PAUSE"}
+          <span className="hidden xs:inline font-sans text-[clamp(9.5px,0.78vw,11px)] font-semibold tracking-[0.22em] uppercase">
+            {isPaused ? "Resume" : "Pause"}
           </span>
         </button>
       </header>
 
-      {/* 3. 3D Image Corridor Stage (Vanishing Point: 50% H, 55% V, Perspective 30cqw) */}
+      {/* 3. Infinite Left & Right Card Rails */}
       <div
-        className="absolute inset-0 flex items-center justify-center [perspective:30cqw] [perspective-origin:50%_55%] [transform-style:preserve-3d] pointer-events-none z-10"
-        aria-hidden="true"
+        className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none"
+        style={{
+          perspective: "300px",
+          perspectiveOrigin: "50% 50%",
+        }}
       >
-        {/* Left Rail (9 Cards, Negative Staggered Delays for Full Corridor on Frame 1) */}
         {LEFT_IMAGES.map((img, idx) => (
           <div
             key={`left-${idx}`}
-            className="corridor-card-left absolute top-[55%] left-[calc(50%-9cqw)] w-[18cqw] h-[25cqw] rounded-[0.8cqw] overflow-hidden border border-white/90 shadow-[0_14px_40px_rgba(25,4,8,0.24)] bg-[#FAF6F0]"
+            className="corridor-card-left absolute top-1/2 left-1/2 rounded-xs overflow-hidden shadow-[0_12px_40px_rgba(30,4,9,0.22)] border border-[#1E0409]/10"
             style={{
-              animationDelay: `-${(18 * idx) / 9}s`,
+              width: "clamp(120px, 16vw, 240px)",
+              aspectRatio: "2/3",
+              animationDelay: `${-(idx * (18 / LEFT_IMAGES.length)).toFixed(3)}s`,
               animationPlayState: isPaused ? "paused" : "running",
             }}
           >
@@ -208,22 +206,21 @@ export default function CorridorSection() {
               src={img.src}
               alt={img.alt}
               fill
-              priority={idx < 4}
-              sizes="20cqw"
+              sizes="(max-width: 768px) 30vw, 15vw"
               className="object-cover object-center"
+              loading="lazy"
             />
-            {/* Subtle luxury edge sheen */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10 pointer-events-none" />
           </div>
         ))}
 
-        {/* Right Rail (9 Cards, Unique Images, Zero Collision) */}
         {RIGHT_IMAGES.map((img, idx) => (
           <div
             key={`right-${idx}`}
-            className="corridor-card-right absolute top-[55%] left-[calc(50%-9cqw)] w-[18cqw] h-[25cqw] rounded-[0.8cqw] overflow-hidden border border-white/90 shadow-[0_14px_40px_rgba(25,4,8,0.24)] bg-[#FAF6F0]"
+            className="corridor-card-right absolute top-1/2 left-1/2 rounded-xs overflow-hidden shadow-[0_12px_40px_rgba(30,4,9,0.22)] border border-[#1E0409]/10"
             style={{
-              animationDelay: `-${(18 * idx) / 9}s`,
+              width: "clamp(120px, 16vw, 240px)",
+              aspectRatio: "2/3",
+              animationDelay: `${-(idx * (18 / RIGHT_IMAGES.length)).toFixed(3)}s`,
               animationPlayState: isPaused ? "paused" : "running",
             }}
           >
@@ -231,35 +228,33 @@ export default function CorridorSection() {
               src={img.src}
               alt={img.alt}
               fill
-              priority={idx < 4}
-              sizes="20cqw"
+              sizes="(max-width: 768px) 30vw, 15vw"
               className="object-cover object-center"
+              loading="lazy"
             />
-            {/* Subtle luxury edge sheen */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10 pointer-events-none" />
           </div>
         ))}
       </div>
 
-      {/* 4. Central Main Editorial Content (In Front of Cards, Centered Horizontally & Vertically) */}
+      {/* 4. Central Main Editorial Content */}
       <motion.div
         style={{ y: textParallax }}
-        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-6 text-center"
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-4 sm:px-6 text-center"
       >
         {/* Luminous Warm Aura behind Headline for 100% Contrast & Legibility */}
         <div
-          className="absolute w-[85vw] max-w-[1020px] h-[70vh] max-h-[520px] rounded-full pointer-events-none -z-10"
+          className="absolute w-[95vw] md:w-[85vw] max-w-[1020px] h-[75vh] md:h-[70vh] max-h-[520px] rounded-full pointer-events-none -z-10"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.98) 0%, rgba(251, 247, 240, 0.94) 42%, rgba(251, 247, 240, 0.5) 72%, transparent 100%)",
-            filter: "blur(25px)",
+              "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.98) 0%, rgba(251, 247, 240, 0.94) 45%, rgba(251, 247, 240, 0.6) 75%, transparent 100%)",
+            filter: "blur(22px)",
           }}
         />
 
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 mb-3">
+        <div className="inline-flex items-center gap-2 mb-2 sm:mb-3">
           <span className="w-1.5 h-1.5 rotate-45 bg-[#8B1E3F]" />
-          <span className="font-sans text-[clamp(10px,0.85vw,12px)] font-bold tracking-[0.35em] text-[#8B1E3F] uppercase">
+          <span className="font-sans text-[clamp(9.5px,0.85vw,12px)] font-bold tracking-[0.3em] sm:tracking-[0.35em] text-[#8B1E3F] uppercase">
             STORIES IN DRAPES
           </span>
           <span className="w-1.5 h-1.5 rotate-45 bg-[#8B1E3F]" />
@@ -267,7 +262,7 @@ export default function CorridorSection() {
 
         {/* Main Heading */}
         <EditorialTitleReveal>
-          <h2 className="text-[clamp(44px,6.8vw,104px)] leading-[0.92] max-w-[960px] drop-shadow-sm select-text">
+          <h2 className="text-[clamp(34px,7.2vw,104px)] leading-[0.94] max-w-[960px] drop-shadow-sm select-text">
             <span className="font-display font-medium text-[#1E0409] tracking-[0.02em] block">Every drape tells</span>
             <span className="font-serif italic font-light text-[#8B1E3F] tracking-normal block">an eternal story.</span>
           </h2>

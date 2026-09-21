@@ -52,7 +52,7 @@ export default function ContactSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/35 pointer-events-none" />
       </motion.div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16">
         
         {/* ── Editorial Section Header: "Get In Touch" ─────────────────────── */}
         <div className="text-center mb-12 sm:mb-16">
@@ -81,7 +81,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-8%" }}
             transition={{ duration: 0.85, ease: LUXURY_EASE, delay: 0.1 }}
-            className="lg:col-span-4 bg-[#FAF6F0] rounded-sm p-8 sm:p-9 shadow-2xl border border-[#E5DACB]/90 flex flex-col justify-between space-y-8"
+            className="lg:col-span-4 bg-[#FAF6F0] rounded-sm p-6 sm:p-8 lg:p-9 shadow-2xl border border-[#E5DACB]/90 flex flex-col justify-between space-y-8"
           >
             <div className="space-y-7">
               {/* Item 1: Email Us */}
@@ -180,7 +180,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-8%" }}
             transition={{ duration: 0.85, ease: LUXURY_EASE, delay: 0.22 }}
-            className="lg:col-span-4 bg-[#FAF6F0] rounded-sm p-8 sm:p-9 shadow-2xl border border-[#E5DACB]/90 flex flex-col justify-between"
+            className="lg:col-span-4 bg-[#FAF6F0] rounded-sm p-6 sm:p-8 lg:p-9 shadow-2xl border border-[#E5DACB]/90 flex flex-col justify-between"
           >
             <div>
               <h3 className="font-sans text-[12px] font-semibold tracking-[0.26em] text-[#1E0409] uppercase mb-6 pb-3 border-b border-[#E5DACB]">
@@ -288,7 +288,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-8%" }}
             transition={{ duration: 0.85, ease: LUXURY_EASE, delay: 0.34 }}
-            className="lg:col-span-4 relative rounded-sm overflow-hidden bg-gradient-to-b from-[#3E0A14] to-[#26050C] text-[#FAF6F0] p-8 sm:p-9 flex flex-col justify-between shadow-2xl border border-[#D4AF37]/35 min-h-[480px]"
+            className="lg:col-span-4 relative rounded-sm overflow-hidden bg-gradient-to-b from-[#3E0A14] to-[#26050C] text-[#FAF6F0] p-6 sm:p-8 lg:p-9 flex flex-col justify-between shadow-2xl border border-[#D4AF37]/35 min-h-[440px] sm:min-h-[480px]"
           >
             {/* Top Poetic Quote & Traditional Separator */}
             <div className="relative z-10 space-y-6 pt-2">

@@ -547,7 +547,7 @@ export default function SilkWeave() {
   }, [mounted]);
 
   return (
-    <div className="sk-root">
+    <div id="silk-canvas" className="sk-root">
       <style dangerouslySetInnerHTML={{ __html: css }} />
 
       {/* 1. Romantic Floral Bokeh Photographic Backdrop */}
@@ -575,7 +575,7 @@ export default function SilkWeave() {
         <span className="sk-meta">Pure Silk · Handwoven</span>
       </header>
       <footer className="sk-chrome sk-bottom">
-        <span className="sk-hint">Brush across the silk — press to grab</span>
+        <span className="sk-hint">Touch across the silk to ripple</span>
         <span className="sk-meta">Heritage Edit / 03</span>
       </footer>
     </div>
@@ -583,17 +583,15 @@ export default function SilkWeave() {
 }
 
 const css = `
-  @import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap");
-
   .sk-root {
     position: relative;
     width: 100%;
     height: 100svh;
-    min-height: 650px;
+    min-height: 560px;
     overflow: hidden;
     background: #140306;
     cursor: crosshair;
-    font-family: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-inter), sans-serif;
   }
 
   /* Floral Bokeh Backdrop */
@@ -628,11 +626,13 @@ const css = `
     inset: 0;
     z-index: 2;
     pointer-events: auto;
+    touch-action: pan-y;
   }
   .sk-stage canvas {
     display: block;
     width: 100%;
     height: 100%;
+    touch-action: pan-y;
   }
 
   /* Film grain + vignette */
@@ -662,13 +662,13 @@ const css = `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 clamp(1.4rem, 4vw, 3rem);
+    padding: 0 clamp(1.2rem, 4vw, 3rem);
     pointer-events: none;
     color: #FAF6F0;
   }
-  .sk-top { top: clamp(1.4rem, 4vh, 2.4rem); }
-  .sk-bottom { bottom: clamp(1.4rem, 4vh, 2.4rem); }
-  .sk-mark { font-weight: 700; font-size: 17px; letter-spacing: .03em; }
+  .sk-top { top: clamp(1.2rem, 3.5vh, 2.4rem); }
+  .sk-bottom { bottom: clamp(1.2rem, 3.5vh, 2.4rem); }
+  .sk-mark { font-family: var(--font-cinzel), serif; font-weight: 600; font-size: 18px; letter-spacing: .08em; }
   .sk-meta, .sk-hint {
     font-size: 11px;
     font-weight: 500;
@@ -688,6 +688,10 @@ const css = `
   }
 
   @media (max-width: 680px) {
-    .sk-hint { display: none; }
+    .sk-chrome { padding: 0 1rem; }
+    .sk-hint { font-size: 9px; letter-spacing: 0.14em; }
+    .sk-hint::before { width: 14px; margin-right: 6px; }
+    .sk-meta { font-size: 9px; letter-spacing: 0.14em; }
+    .sk-mark { font-size: 16px; }
   }
 `;

@@ -35,19 +35,19 @@ export default function HeroTrustRow() {
   ];
 
   return (
-    <div className="inline-flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#140306]/85 backdrop-blur-md border border-[#D4AF37]/50 shadow-[0_8px_25px_rgba(0,0,0,0.7)] select-none text-[#FAF6F0]">
+    <div className="inline-flex items-center justify-center gap-2.5 sm:gap-4 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full bg-[#140306]/90 backdrop-blur-md border border-[#D4AF37]/50 shadow-[0_8px_25px_rgba(0,0,0,0.7)] select-none text-[#FAF6F0] max-w-full overflow-x-auto scrollbar-none">
       {items.map((item, index) => (
         <React.Fragment key={item.title}>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <span className="text-[#F3E5AB] drop-shadow-[0_1px_4px_rgba(212,175,55,0.7)]">
               {item.icon}
             </span>
-            <span className="font-sans text-[clamp(9px,0.75vw,11.5px)] tracking-[0.22em] font-semibold uppercase whitespace-nowrap text-[#FAF6F0] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+            <span className="font-sans text-[clamp(8.5px,0.75vw,11.5px)] tracking-[0.18em] sm:tracking-[0.22em] font-semibold uppercase whitespace-nowrap text-[#FAF6F0] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
               {item.title}
             </span>
           </div>
           {index < items.length - 1 && (
-            <span className="text-[#D4AF37]/60 text-xs">|</span>
+            <span className="text-[#D4AF37]/50 text-xs shrink-0">|</span>
           )}
         </React.Fragment>
       ))}

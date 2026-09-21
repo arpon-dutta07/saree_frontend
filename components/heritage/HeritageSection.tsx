@@ -350,10 +350,9 @@ export default function HeritageSection() {
 
               {/* Main Headline */}
               <EditorialTitleReveal>
-                <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#FAF6F0] leading-[1.08] tracking-[0.02em]">
-                  Royal Drapes,
-                  <br />
-                  <span className="italic font-light text-[#FAF6F0]/90">Eternal Majesty</span>
+                <h2 className="text-[clamp(28px,3.1vw,46px)] leading-[1.08] tracking-[0.02em]">
+                  <span className="font-display font-medium text-[#FAF6F0] block">Royal Drapes,</span>
+                  <span className="font-serif italic font-light text-[#F3E5AB] block">Eternal Majesty</span>
                 </h2>
               </EditorialTitleReveal>
 

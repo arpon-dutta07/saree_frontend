@@ -60,8 +60,9 @@ export default function ContactSection() {
             Concierge &amp; Flagship Atelier
           </span>
           <EditorialTitleReveal>
-            <h2 className="font-serif text-[clamp(38px,4.5vw,58px)] font-light text-[#FAF6F0] tracking-wide leading-none">
-              Get In <span className="italic font-normal text-[#FAF6F0]">Touch</span>
+            <h2 className="text-[clamp(38px,4.5vw,58px)] tracking-wide leading-none">
+              <span className="font-display font-medium text-[#FAF6F0]">Get In </span>
+              <span className="font-serif italic font-light text-[#F3E5AB]">Touch</span>
             </h2>
           </EditorialTitleReveal>
           <div className="flex items-center justify-center gap-3 mt-4">

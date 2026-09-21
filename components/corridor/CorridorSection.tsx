@@ -141,7 +141,7 @@ export default function CorridorSection() {
         <a
           href="#"
           className="flex items-center gap-3 group focus:outline-none"
-          aria-label="Chandrani Gems Heritage"
+          aria-label="Aarohi Haute Couture"
         >
           <div className="w-8 h-8 rounded-full bg-[#FAF6F0] p-1 flex items-center justify-center shadow-sm border border-[#1E0409]/15 group-hover:scale-105 transition-transform duration-300">
             <div className="relative w-full h-full">
@@ -155,7 +155,7 @@ export default function CorridorSection() {
             </div>
           </div>
           <span className="font-serif tracking-[0.25em] text-[clamp(11px,0.85vw,13px)] text-[#1E0409] font-medium uppercase">
-            CHANDRANI
+            AAROHI
           </span>
         </a>
 
@@ -267,10 +267,9 @@ export default function CorridorSection() {
 
         {/* Main Heading */}
         <EditorialTitleReveal>
-          <h2 className="font-serif text-[clamp(44px,6.8vw,104px)] font-normal text-[#1E0409] tracking-[-0.04em] leading-[0.92] max-w-[960px] drop-shadow-sm select-text">
-            Every drape tells
-            <br />
-            <span className="italic font-light text-[#4A101D]">an eternal story.</span>
+          <h2 className="text-[clamp(44px,6.8vw,104px)] leading-[0.92] max-w-[960px] drop-shadow-sm select-text">
+            <span className="font-display font-medium text-[#1E0409] tracking-[0.02em] block">Every drape tells</span>
+            <span className="font-serif italic font-light text-[#8B1E3F] tracking-normal block">an eternal story.</span>
           </h2>
         </EditorialTitleReveal>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Montserrat, Inter } from "next/font/google";
+import { Cormorant_Garamond, Cinzel, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
 
@@ -10,7 +10,7 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-const montserrat = Montserrat({
+const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-cinzel",
@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${montserrat.variable} ${inter.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${cinzel.variable} ${inter.variable}`}>
       <body className="antialiased min-h-screen bg-[#140306] text-[#FAF6F0]">
         <SmoothScrollProvider>
           {children}

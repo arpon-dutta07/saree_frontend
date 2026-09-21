@@ -442,11 +442,11 @@ export default function ContactSplitSection() {
               z-index: 18;
               margin: 0;
               color: #4A0E17;
-              font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+              font-family: var(--font-cinzel), 'Cinzel', Georgia, serif;
               font-size: clamp(28px, 2.7vw, 42px);
               font-weight: 500;
               line-height: 1.1;
-              letter-spacing: 0.03em;
+              letter-spacing: 0.04em;
               white-space: nowrap;
               opacity: 0;
               pointer-events: none;
@@ -459,7 +459,7 @@ export default function ContactSplitSection() {
               font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
               font-style: italic;
               font-weight: 400;
-              color: #4A0E17;
+              color: #8B1E3F;
             }
 
             .va-title-left {

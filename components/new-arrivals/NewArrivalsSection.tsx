@@ -265,10 +265,9 @@ export default function NewArrivalsSection() {
 
               {/* Main Headline */}
               <EditorialTitleReveal>
-                <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#2A0C14] leading-[1.08] tracking-[0.02em]">
-                  Fresh Weaves,
-                  <br />
-                  <span className="italic font-light">Timeless Grace</span>
+                <h2 className="text-[clamp(28px,3.1vw,46px)] leading-[1.08] tracking-[0.02em]">
+                  <span className="font-display font-medium text-[#2A0C14] block">Fresh Weaves,</span>
+                  <span className="font-serif italic font-light text-[#8B1E3F] block">Timeless Grace</span>
                 </h2>
               </EditorialTitleReveal>
 

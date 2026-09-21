@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { EditorialTitleReveal, EditorialBlockReveal } from "@/components/motion/ScrollReveal";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 interface SareeItem {
   id: string;
@@ -117,11 +118,42 @@ const cornerOverlayVariants = {
   },
 };
 
+// Differential depth offsets for each card (px)
+const CARD_DEPTHS = [16, 24, 18, 26];
+
 export default function NewArrivalsSection() {
   const [activeCategory, setActiveCategory] = useState<string>("SILK SAREES");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const cardsRef = useRef<HTMLDivElement>(null);
   const isCardsInView = useInView(cardsRef, { once: true, amount: 0.15 });
+
+  // 2.5D Mouse hover parallax — desktop pointer only
+  const { containerRef: parallaxRef, mouseHandlers, useLayerX, useLayerY } = useMouseParallax();
+
+  // Background counter-drift
+  const bgPx = useLayerX(-8);
+  const bgPy = useLayerY(-8);
+  // Corner botanical accent
+  const cornerPx = useLayerX(16);
+  const cornerPy = useLayerY(16);
+  // Editorial text grounded float
+  const editPx = useLayerX(8);
+  const editPy = useLayerY(8);
+  // Individual card depths
+  const card0x = useLayerX(CARD_DEPTHS[0]);
+  const card0y = useLayerY(CARD_DEPTHS[0]);
+  const card1x = useLayerX(CARD_DEPTHS[1]);
+  const card1y = useLayerY(CARD_DEPTHS[1]);
+  const card2x = useLayerX(CARD_DEPTHS[2]);
+  const card2y = useLayerY(CARD_DEPTHS[2]);
+  const card3x = useLayerX(CARD_DEPTHS[3]);
+  const card3y = useLayerY(CARD_DEPTHS[3]);
+  const cardParallax = [
+    { x: card0x, y: card0y },
+    { x: card1x, y: card1y },
+    { x: card2x, y: card2y },
+    { x: card3x, y: card3y },
+  ];
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? sareeCollection.length - 1 : prev - 1));
@@ -134,14 +166,18 @@ export default function NewArrivalsSection() {
   return (
     <motion.section
       id="new-arrivals"
+      ref={(node) => {
+        (parallaxRef as React.MutableRefObject<HTMLDivElement | null>).current = node as HTMLDivElement | null;
+      }}
       className="relative w-full h-auto min-h-0 lg:aspect-[16/9] lg:max-h-screen lg:min-h-[700px] overflow-hidden bg-[#FBF7F0] text-[#341118] select-none mx-auto py-10 lg:py-0"
       variants={sectionContainerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.15 }}
+      {...mouseHandlers}
     >
-      {/* 1. Base Textured Paper Background Plate */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+      {/* 1. Base Textured Paper Background Plate — counter-drift parallax */}
+      <motion.div style={{ x: bgPx, y: bgPy }} className="absolute inset-0 w-full h-full pointer-events-none z-0">
         <Image
           src="/new-arrivals/bg-cream.png"
           alt="Warm cream textured parchment backdrop"
@@ -151,7 +187,7 @@ export default function NewArrivalsSection() {
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-[#FBF7F0]/30 mix-blend-multiply pointer-events-none" />
-      </div>
+      </motion.div>
 
       {/* 2. Top Navigation Bar (Desktop only) */}
       <motion.header
@@ -218,9 +254,10 @@ export default function NewArrivalsSection() {
         </div>
       </motion.header>
 
-      {/* 3. Bottom-Left Curved Burgundy Botanical Corner Overlay */}
+      {/* 3. Bottom-Left Curved Burgundy Botanical Corner Overlay — accent parallax */}
       <motion.div
         variants={cornerOverlayVariants}
+        style={{ x: cornerPx, y: cornerPy }}
         className="hidden md:block absolute bottom-0 left-0 w-[13vw] max-w-[190px] aspect-square pointer-events-none z-10"
       >
         <Image
@@ -239,6 +276,7 @@ export default function NewArrivalsSection() {
           {/* LEFT EDITORIAL COLUMN */}
           <motion.div
             variants={editorialVariants}
+            style={{ x: editPx, y: editPy }}
             className="col-span-1 lg:col-span-4 xl:col-span-3 flex flex-col justify-between z-30 pr-0 lg:pr-2 pt-0"
           >
             {/* Top Text Block */}
@@ -355,8 +393,9 @@ export default function NewArrivalsSection() {
               {sareeCollection.map((saree, idx) => {
                 const isSelected = currentIndex === idx;
                 return (
-                  <div
+                  <motion.div
                     key={saree.id}
+                    style={{ x: cardParallax[idx]?.x, y: cardParallax[idx]?.y }}
                     className="shrink-0 w-[220px] sm:w-[260px] lg:w-auto snap-center relative flex flex-col h-full group cursor-pointer"
                     onClick={() => {
                       setCurrentIndex(idx);
@@ -445,7 +484,7 @@ export default function NewArrivalsSection() {
                         }`}
                       />
                     </motion.div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>

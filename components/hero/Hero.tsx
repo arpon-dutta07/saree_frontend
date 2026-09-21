@@ -9,6 +9,7 @@ import {
   heroLeftFloralVariants,
   heroRightLanternsVariants,
 } from "@/lib/heroAnimation";
+import { useMouseParallax } from "@/hooks/useMouseParallax";
 
 import HeroBackground from "./HeroBackground";
 import HeroNavbar from "./HeroNavbar";
@@ -37,13 +38,37 @@ export default function Hero({ startAnimation = true }: HeroProps) {
   const yHeadline = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const opacityFade = useTransform(scrollYProgress, [0, 0.9], [1, 0.25]);
 
+  // 2.5D Mouse hover parallax — desktop pointer only
+  const { containerRef: parallaxRef, mouseHandlers, useLayerX, useLayerY } = useMouseParallax();
+
+  // Depth layers: background counter-drift, text grounded, models/accents foreground
+  const bgParallaxX = useLayerX(-10);
+  const bgParallaxY = useLayerY(-10);
+  const floralParallaxX = useLayerX(12);
+  const floralParallaxY = useLayerY(12);
+  const headlineParallaxX = useLayerX(8);
+  const headlineParallaxY = useLayerY(8);
+  const modelRedParallaxX = useLayerX(22);
+  const modelRedParallaxY = useLayerY(18);
+  const modelBlackParallaxX = useLayerX(26);
+  const modelBlackParallaxY = useLayerY(20);
+  const lanternParallaxX = useLayerX(28);
+  const lanternParallaxY = useLayerY(24);
+  const bottomFloralParallaxX = useLayerX(16);
+  const bottomFloralParallaxY = useLayerY(14);
+
   return (
     <div
-      ref={heroRef}
+      ref={(node) => {
+        // Merge both refs
+        (heroRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        (parallaxRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      }}
       className="relative w-full h-[100svh] min-h-[660px] md:h-auto md:aspect-[16/9] md:max-h-screen overflow-hidden bg-[#140306] select-none mx-auto"
+      {...mouseHandlers}
     >
       {/* 1. Background base image with smooth depth parallax */}
-      <motion.div style={{ y: yBg }} className="absolute inset-0 w-full h-full">
+      <motion.div style={{ y: yBg, x: bgParallaxX, translateY: bgParallaxY }} className="absolute inset-0 w-full h-full">
         <HeroBackground />
       </motion.div>
 
@@ -69,6 +94,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 3. Left floral vine — desktop/tablet */}
         <motion.div
           variants={heroLeftFloralVariants}
+          style={{ x: floralParallaxX, y: floralParallaxY }}
           className="hidden md:block absolute top-0 left-0 w-[17%] h-full z-20 pointer-events-none"
         >
           <HeroLeftFloral />
@@ -77,7 +103,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 4. Headline block */}
         <motion.div
           variants={heroItemVariants}
-          style={{ y: yHeadline }}
+          style={{ y: yHeadline, x: headlineParallaxX, translateY: headlineParallaxY }}
           className="absolute top-[16%] sm:top-[18%] md:top-[21%] left-5 sm:left-8 md:left-[13.5%] w-[calc(100%-40px)] sm:w-[85%] md:w-[40%] md:h-[30%] z-30"
         >
           <HeroHeadline />
@@ -86,7 +112,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 5. CTA pill button */}
         <motion.div
           variants={heroItemVariants}
-          style={{ y: yHeadline }}
+          style={{ y: yHeadline, x: headlineParallaxX, translateY: headlineParallaxY }}
           className="absolute top-[43%] sm:top-[46%] md:top-[53%] left-5 sm:left-8 md:left-[13.5%] w-auto min-w-[240px] max-w-[280px] md:w-[27%] md:h-[7%] z-30"
         >
           <HeroCTA />
@@ -95,7 +121,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 6. Trust row */}
         <motion.div
           variants={heroItemVariants}
-          style={{ y: yHeadline }}
+          style={{ y: yHeadline, x: headlineParallaxX, translateY: headlineParallaxY }}
           className="absolute bottom-5 sm:bottom-7 md:bottom-auto md:top-[63%] left-4 right-4 md:right-auto md:left-[13.5%] flex justify-center md:justify-start z-30"
         >
           <HeroTrustRow />
@@ -104,7 +130,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 7. Model 1 — red saree (seated) */}
         <motion.div
           variants={heroItemVariants}
-          style={{ y: yModels }}
+          style={{ y: yModels, x: modelRedParallaxX, translateY: modelRedParallaxY }}
           className="absolute bottom-14 sm:bottom-16 md:bottom-0 right-[-12%] sm:right-[-4%] md:left-[36.5%] md:right-auto w-[82%] sm:w-[65%] md:w-[36.5%] h-[54%] sm:h-[62%] md:h-[71%] z-20 pointer-events-none opacity-90 md:opacity-100"
         >
           <HeroModels model="red" />
@@ -113,7 +139,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 8. Model 2 — black saree (standing) */}
         <motion.div
           variants={heroItemVariants}
-          style={{ y: yModels }}
+          style={{ y: yModels, x: modelBlackParallaxX, translateY: modelBlackParallaxY }}
           className="hidden sm:block absolute bottom-0 right-[28%] md:left-[58.5%] md:right-auto w-[35%] md:w-[17.5%] h-[72%] md:h-[91%] z-24 pointer-events-none opacity-60 sm:opacity-80 md:opacity-100"
         >
           <HeroModels model="black" />
@@ -122,6 +148,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 9. Right lantern element */}
         <motion.div
           variants={heroRightLanternsVariants}
+          style={{ x: lanternParallaxX, y: lanternParallaxY }}
           className="hidden md:block absolute top-0 left-[71%] w-[29%] h-[96%] z-20 pointer-events-none"
         >
           <HeroRightLanterns />
@@ -130,6 +157,7 @@ export default function Hero({ startAnimation = true }: HeroProps) {
         {/* 10. Bottom-left floral cluster */}
         <motion.div
           variants={heroItemVariants}
+          style={{ x: bottomFloralParallaxX, y: bottomFloralParallaxY }}
           className="hidden md:block absolute bottom-0 left-0 w-[35%] h-[38%] z-40 pointer-events-none"
         >
           <HeroBottomFloral />

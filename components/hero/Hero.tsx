@@ -136,11 +136,11 @@ export default function Hero({ startAnimation = true }: HeroProps) {
           <HeroModels model="red" />
         </motion.div>
 
-        {/* 8. Model 2 — black saree (standing) */}
+        {/* 8. Model 2 — black saree (standing) — layered ON TOP of red model */}
         <motion.div
           variants={heroItemVariants}
           style={{ y: yModels, x: modelBlackParallaxX, translateY: modelBlackParallaxY }}
-          className="hidden sm:block absolute bottom-0 right-[28%] md:left-[58.5%] md:right-auto w-[35%] md:w-[17.5%] h-[72%] md:h-[91%] z-24 pointer-events-none opacity-60 sm:opacity-80 md:opacity-100"
+          className="hidden sm:block absolute bottom-0 right-[28%] md:left-[58.5%] md:right-auto w-[35%] md:w-[17.5%] h-[72%] md:h-[91%] z-[25] pointer-events-none opacity-60 sm:opacity-80 md:opacity-100"
         >
           <HeroModels model="black" />
         </motion.div>

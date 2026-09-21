@@ -12,7 +12,7 @@ export default function HeroHeadline() {
       </div>
 
       {/* Main Haute-Couture Headline: Aarohi */}
-      <h1 className="my-auto font-display text-[clamp(44px,6.2vw,92px)] font-normal tracking-[0.06em] leading-[0.88]">
+      <h1 className="my-auto font-serif font-medium text-[clamp(48px,6.6vw,98px)] tracking-[0.02em] leading-[0.92]">
         <span
           className="inline-block"
           style={{

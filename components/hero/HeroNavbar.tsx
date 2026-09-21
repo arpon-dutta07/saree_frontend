@@ -65,7 +65,7 @@ export default function HeroNavbar() {
               </div>
             </div>
             {/* Mobile Brand Name for clarity */}
-            <span className="md:hidden font-display text-[15px] font-semibold tracking-[0.14em] text-[#FAF6F0]">
+            <span className="md:hidden font-serif text-[17px] font-medium tracking-[0.06em] text-[#FAF6F0]">
               Aarohi
             </span>
           </a>
@@ -88,7 +88,7 @@ export default function HeroNavbar() {
         </div>
 
         {/* Action Icons right-anchored */}
-        <div className="flex items-center gap-3 sm:gap-[1.2vw] text-[#FAF6F0]/90">
+        <div className="ml-auto flex items-center justify-end gap-3 sm:gap-[1.2vw] text-[#FAF6F0]/90 z-20 pointer-events-auto">
           {/* Search */}
           <button
             type="button"

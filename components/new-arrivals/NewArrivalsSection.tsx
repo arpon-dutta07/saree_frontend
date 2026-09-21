@@ -12,6 +12,8 @@ interface SareeItem {
   category: string;
   image: string;
   colorTag: string;
+  price: string;
+  craft: string;
 }
 
 const sareeCollection: SareeItem[] = [
@@ -22,6 +24,8 @@ const sareeCollection: SareeItem[] = [
     category: "SILK SAREES",
     image: "/new-arrivals/card-rani-pink.png",
     colorTag: "#D91656",
+    price: "₹46,500",
+    craft: "Pure Mulberry Silk · 24k Gold Zari",
   },
   {
     id: "02",
@@ -30,6 +34,8 @@ const sareeCollection: SareeItem[] = [
     category: "COTTON SAREES",
     image: "/new-arrivals/card-coral-orange.png",
     colorTag: "#FA8072",
+    price: "₹34,000",
+    craft: "Fine Chanderi Cotton · Temple Border",
   },
   {
     id: "03",
@@ -38,6 +44,8 @@ const sareeCollection: SareeItem[] = [
     category: "LINEN SAREES",
     image: "/new-arrivals/card-lavender.png",
     colorTag: "#BDB2FF",
+    price: "₹38,500",
+    craft: "Artisanal French Linen · Floral Resham",
   },
   {
     id: "04",
@@ -46,6 +54,8 @@ const sareeCollection: SareeItem[] = [
     category: "FESTIVE EDIT",
     image: "/new-arrivals/card-yellow.png",
     colorTag: "#FFD166",
+    price: "₹52,000",
+    craft: "Tissue Organza Silk · Hand Embroidered",
   },
 ];
 
@@ -347,33 +357,81 @@ export default function NewArrivalsSection() {
           {/* RIGHT 4-COLUMN CARDS SHOWCASE */}
           <div className="col-span-1 lg:col-span-8 xl:col-span-9 flex flex-col justify-between h-full w-full">
             
-            {/* 4 Cards Row: Mobile horizontal snap carousel, desktop 4-col grid */}
-            <div className="flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-none gap-4 lg:gap-[1.2vw] items-stretch h-[390px] sm:h-[430px] lg:h-[85%] pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0 grid-cols-2 md:grid-cols-4">
+            {/* 4 Cards Row: Mobile horizontal snap carousel, desktop 4-col grid with staggered scroll reveal */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.16,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
+              className="flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-none gap-4 lg:gap-[1.2vw] items-stretch h-[390px] sm:h-[430px] lg:h-[85%] pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0 grid-cols-2 md:grid-cols-4"
+            >
               {sareeCollection.map((saree, idx) => {
                 const isSelected = currentIndex === idx;
                 return (
                   <motion.div
                     key={saree.id}
-                    custom={idx}
-                    variants={cardCascadeVariants}
+                    variants={{
+                      hidden: { opacity: 0, y: 48, scale: 0.94 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        transition: {
+                          duration: 0.85,
+                          ease: luxuryEase,
+                        },
+                      },
+                    }}
                     className="shrink-0 w-[220px] sm:w-[260px] lg:w-auto snap-center relative flex flex-col h-full group cursor-pointer"
                     onClick={() => {
                       setCurrentIndex(idx);
                       setActiveCategory(saree.category);
                     }}
                   >
-                    {/* Portrait Image Container */}
-                    <div className="relative w-full flex-1 rounded-sm overflow-hidden shadow-[0_6px_25px_rgba(42,12,20,0.08)] transition-all duration-500 group-hover:shadow-[0_12px_35px_rgba(42,12,20,0.18)]">
+                    {/* Portrait Image Container with Luxury Blur on Hover */}
+                    <div className="relative w-full flex-1 rounded-sm overflow-hidden shadow-[0_6px_25px_rgba(42,12,20,0.08)] transition-all duration-500 group-hover:shadow-[0_16px_40px_rgba(42,12,20,0.22)] bg-[#2A0C14]">
                       <Image
                         src={saree.image}
                         alt={`${saree.name} - ${saree.subtitle}`}
                         fill
                         sizes="(max-width: 768px) 70vw, 20vw"
-                        className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="object-cover object-top transition-all duration-700 ease-out group-hover:scale-108 group-hover:blur-[5px]"
                       />
                       
-                      {/* Hover ambient sheen */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* Dark Vignette Overlay on Hover */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2A0C14]/95 via-[#2A0C14]/70 to-[#2A0C14]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-400 ease-out pointer-events-none" />
+
+                      {/* Revealed Price & Craft Information Overlay on Hover */}
+                      <div className="absolute inset-0 p-4 sm:p-5 flex flex-col justify-end items-center text-center opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-400 ease-out pointer-events-none select-none">
+                        <span className="font-sans text-[9px] sm:text-[10px] font-semibold tracking-[0.25em] text-[#D4AF37] uppercase mb-1">
+                          ◈ {saree.category}
+                        </span>
+                        <h4 className="font-serif text-lg sm:text-xl font-medium text-[#FAF6F0] tracking-[0.04em] leading-tight mb-1">
+                          {saree.name}
+                        </h4>
+                        <p className="font-sans text-[10px] sm:text-[11px] text-[#FAF6F0]/80 tracking-wide mb-2 line-clamp-2">
+                          {saree.craft}
+                        </p>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="font-serif text-base sm:text-lg font-semibold text-[#F5E8BE]">
+                            {saree.price}
+                          </span>
+                          <span className="font-sans text-[9px] text-[#FAF6F0]/60 tracking-wider uppercase">
+                            Incl. taxes
+                          </span>
+                        </div>
+                        <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FAF6F0]/15 hover:bg-[#FAF6F0]/25 backdrop-blur-md border border-[#D4AF37]/50 text-[#FAF6F0] text-[10px] sm:text-[11px] font-sans font-medium tracking-[0.18em] uppercase transition-colors shadow-sm">
+                          View Drape →
+                        </span>
+                      </div>
                     </div>
 
                     {/* Card Label & Subtitle Below */}
@@ -397,7 +455,7 @@ export default function NewArrivalsSection() {
                   </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
 
             {/* Bottom Carousel Navigation Controls (< 01 — 04 >) */}
             <div className="flex items-center justify-between lg:justify-end gap-3 pt-3 select-none">

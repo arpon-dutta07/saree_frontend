@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { EditorialTitleReveal } from "@/components/motion/ScrollReveal";
 
 interface SareeItem {
@@ -98,19 +98,7 @@ const editorialVariants = {
   },
 };
 
-const cardCascadeVariants = {
-  hidden: { opacity: 0, y: 36, scale: 0.96 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.85,
-      delay: 0.15 + i * 0.12,
-      ease: luxuryEase,
-    },
-  }),
-};
+const framerSpringEase = [0.16, 1, 0.3, 1] as const;
 
 const cornerOverlayVariants = {
   hidden: { opacity: 0, scale: 0.92 },
@@ -127,6 +115,8 @@ const cornerOverlayVariants = {
 export default function HeritageSection() {
   const [activeCategory, setActiveCategory] = useState<string>("BANARASI SILK");
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const isCardsInView = useInView(cardsRef, { once: true, amount: 0.15 });
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? heritageCollection.length - 1 : prev - 1));
@@ -352,47 +342,37 @@ export default function HeritageSection() {
           {/* 4-COLUMN CARDS SHOWCASE (On mobile: order-last below heading; On desktop: order-first on left) */}
           <div className="col-span-1 lg:col-span-8 xl:col-span-9 flex flex-col justify-between h-full w-full order-last lg:order-first pt-0">
             
-            {/* 4 Cards Row: Mobile horizontal snap carousel, desktop 4-col grid with staggered scroll reveal */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: {
-                    staggerChildren: 0.16,
-                    delayChildren: 0.1,
-                  },
-                },
-              }}
+            {/* 4 Cards Row: Mobile horizontal snap carousel, desktop 4-col grid */}
+            <div
+              ref={cardsRef}
               className="flex lg:grid overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-none gap-4 lg:gap-[1.2vw] items-stretch h-[390px] sm:h-[430px] lg:h-[85%] pb-4 lg:pb-0 -mx-5 px-5 lg:mx-0 lg:px-0 grid-cols-2 md:grid-cols-4 pt-0"
             >
               {heritageCollection.map((saree, idx) => {
                 const isSelected = currentIndex === idx;
                 return (
-                  <motion.div
+                  <div
                     key={saree.id}
-                    variants={{
-                      hidden: { opacity: 0, y: 48, scale: 0.94 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        transition: {
-                          duration: 0.85,
-                          ease: luxuryEase,
-                        },
-                      },
-                    }}
                     className="shrink-0 w-[220px] sm:w-[260px] lg:w-auto snap-center relative flex flex-col h-full group cursor-pointer"
                     onClick={() => {
                       setCurrentIndex(idx);
                       setActiveCategory(saree.category);
                     }}
                   >
-                    {/* Portrait Image Container with Luxury Blur on Hover */}
-                    <div className="relative w-full flex-1 rounded-sm overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.35)] border border-[#FAF6F0]/20 transition-all duration-500 group-hover:border-[#FAF6F0]/50 group-hover:shadow-[0_16px_40px_rgba(0,0,0,0.6)] bg-[#140306]">
+                    {/* Portrait Image Container: Shrunk to a bottom line at Start, growing upward to full height at End */}
+                    <motion.div
+                      initial={{ clipPath: "inset(100% 0% 0% 0%)", opacity: 0.25 }}
+                      animate={
+                        isCardsInView
+                          ? { clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }
+                          : { clipPath: "inset(100% 0% 0% 0%)", opacity: 0.25 }
+                      }
+                      transition={{
+                        duration: 1.05,
+                        delay: idx * 0.18,
+                        ease: framerSpringEase,
+                      }}
+                      className="relative w-full flex-1 rounded-sm overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.35)] border border-[#FAF6F0]/20 group-hover:border-[#FAF6F0]/50 group-hover:shadow-[0_16px_40px_rgba(0,0,0,0.6)] transition-[border-color,box-shadow] duration-500 bg-[#140306]"
+                    >
                       <Image
                         src={saree.image}
                         alt={`${saree.name} - ${saree.subtitle}`}
@@ -427,10 +407,23 @@ export default function HeritageSection() {
                           Explore Drape →
                         </span>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Card Label & Subtitle Below */}
-                    <div className="pt-2 lg:pt-[0.9vw] text-center flex flex-col items-center select-none">
+                    {/* Card Label & Subtitle Below: Smooth single delayed fade-in */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={
+                        isCardsInView
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: 12 }
+                      }
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.2 + idx * 0.18,
+                        ease: luxuryEase,
+                      }}
+                      className="pt-2 lg:pt-[0.9vw] text-center flex flex-col items-center select-none"
+                    >
                       <h3 className="font-sans text-[clamp(11px,0.85vw,13px)] font-medium tracking-[0.24em] text-[#FAF6F0] uppercase">
                         {saree.name}
                       </h3>
@@ -446,11 +439,11 @@ export default function HeritageSection() {
                             : "w-4 bg-[#FAF6F0]/30 group-hover:w-6 group-hover:bg-[#FAF6F0]"
                         }`}
                       />
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </div>
                 );
               })}
-            </motion.div>
+            </div>
 
             {/* Bottom Carousel Navigation Controls (< 01 — 04 >) */}
             <div className="flex items-center justify-between lg:justify-start gap-3 pt-3 select-none">

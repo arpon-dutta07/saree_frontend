@@ -27,8 +27,11 @@ export const metadata: Metadata = {
   title: "Aarohi | Haute Couture Handwoven Sarees",
   description: "Timeless drapes for modern stories. Premium handwoven ethnic sarees and artisanal collections.",
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
     apple: "/favicon.png",
   },
 };

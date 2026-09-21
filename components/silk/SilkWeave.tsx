@@ -6,6 +6,7 @@ import * as THREE from "three";
 /* ────────────────────────────────────────────────────────────────────────
    Silk — a REAL cloth/fabric simulation hero.
    Customized with Royal Maroon & Ivory palette with "Aarohi" woven in.
+   Enhanced with transparent WebGL canvas over romantic floral backdrop.
    ──────────────────────────────────────────────────────────────────────── */
 
 const KICKER = "HERITAGE ATELIER · ROYAL DRAPES";
@@ -21,7 +22,7 @@ const PALETTE = {
   ink: "#FAF6F0", // signature offwhite cream type
   sheen: [1.0, 0.88, 0.78] as const, // warm champagne-gold silk sheen
   rim: [0.72, 0.18, 0.28] as const, // crimson silk fresnel rim
-  clear: 0x140306, // stage behind the silk matching website backdrop
+  clear: 0x000000, // transparent canvas to reveal floral backdrop
 };
 
 export default function SilkWeave() {
@@ -44,9 +45,9 @@ export default function SilkWeave() {
     const TEX_W = cardMode ? 1280 : 2048;
 
     // ── renderer / scene / camera ──────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setClearColor(PALETTE.clear, 1);
+    renderer.setClearColor(0x000000, 0);
     host.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -66,6 +67,7 @@ export default function SilkWeave() {
 
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
+      transparent: true,
       uniforms: {
         map: { value: texture },
         uLight: { value: new THREE.Vector3(-0.42, 0.72, 0.58).normalize() },
@@ -538,19 +540,30 @@ export default function SilkWeave() {
     };
   }, [mounted]);
 
-  if (!mounted) {
-    return (
-      <div className="relative w-full h-[100svh] min-h-[650px] bg-[#140306] overflow-hidden" />
-    );
-  }
-
   return (
     <div className="sk-root">
       <style dangerouslySetInnerHTML={{ __html: css }} />
-      <div className="sk-stage" ref={hostRef} />
-      <div className="sk-grain" aria-hidden />
-      <div className="sk-vignette" aria-hidden />
 
+      {/* 1. Romantic Floral Bokeh Photographic Backdrop */}
+      <div className="sk-bg-floral" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/silk/silk-bg-flowers.png"
+          alt="Golden-hour floral background"
+          className="sk-bg-img"
+        />
+        {/* Luxury multi-layer ambient veil for deep contrast & golden warmth */}
+        <div className="sk-bg-overlay" />
+      </div>
+
+      {/* 2. Interactive 3D Silk Cloth Canvas Stage */}
+      <div className="sk-stage" ref={hostRef} />
+
+      {/* 3. Subtle Film Grain & Vignette */}
+      <div className="sk-grain" aria-hidden="true" />
+      <div className="sk-vignette" aria-hidden="true" />
+
+      {/* 4. Minimalist Chrome Overlays */}
       <header className="sk-chrome sk-top">
         <span className="sk-mark">Aarohi</span>
         <span className="sk-meta">Pure Silk · Handwoven</span>
@@ -566,32 +579,109 @@ export default function SilkWeave() {
 const css = `
   @import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap");
 
-  .sk-root{position:relative;width:100%;height:100svh;min-height:650px;overflow:hidden;
-    background:#140306;cursor:crosshair;
-    font-family:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;}
-  .sk-stage{position:absolute;inset:0;}
-  .sk-stage canvas{display:block;width:100%;height:100%;}
+  .sk-root {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 650px;
+    overflow: hidden;
+    background: #140306;
+    cursor: crosshair;
+    font-family: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  }
 
-  /* faint film grain + vignette over the silk */
-  .sk-grain{position:absolute;inset:0;pointer-events:none;z-index:4;opacity:.05;
-    mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
-  .sk-vignette{position:absolute;inset:0;pointer-events:none;z-index:3;
-    background:radial-gradient(120% 100% at 50% 42%, transparent 52%, rgba(20,3,6,.65) 100%);}
+  /* Floral Bokeh Backdrop */
+  .sk-bg-floral {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .sk-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.02);
+    filter: brightness(0.95) contrast(1.04) saturate(1.08);
+  }
+  .sk-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      /* Soft left-side royal wine veil where the cloth hangs */
+      linear-gradient(to right, rgba(20, 3, 6, 0.68) 0%, rgba(20, 3, 6, 0.25) 45%, rgba(20, 3, 6, 0.2) 100%),
+      /* Seamless top and bottom blending into dark borders */
+      linear-gradient(to bottom, #140306 0%, transparent 14%, transparent 86%, #140306 100%);
+  }
 
-  .sk-chrome{position:absolute;left:0;right:0;z-index:6;display:flex;
-    align-items:center;justify-content:space-between;
-    padding:0 clamp(1.4rem,4vw,3rem);pointer-events:none;
-    color:#FAF6F0;}
-  .sk-top{top:clamp(1.4rem,4vh,2.4rem);}
-  .sk-bottom{bottom:clamp(1.4rem,4vh,2.4rem);}
-  .sk-mark{font-weight:700;font-size:17px;letter-spacing:.03em;}
-  .sk-meta,.sk-hint{font-size:11px;font-weight:500;letter-spacing:.2em;
-    text-transform:uppercase;opacity:.85;}
-  .sk-hint::before{content:"";display:inline-block;width:22px;height:1px;
-    background:currentColor;margin-right:10px;vertical-align:middle;opacity:.6;}
+  /* 3D Canvas Stage */
+  .sk-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: auto;
+  }
+  .sk-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 
-  @media (max-width:680px){
-    .sk-hint{display:none;}
+  /* Film grain + vignette */
+  .sk-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    opacity: .03;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .sk-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    background: radial-gradient(130% 110% at 50% 50%, transparent 60%, rgba(20, 3, 6, 0.45) 100%);
+  }
+
+  /* Chrome bar */
+  .sk-chrome {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1.4rem, 4vw, 3rem);
+    pointer-events: none;
+    color: #FAF6F0;
+  }
+  .sk-top { top: clamp(1.4rem, 4vh, 2.4rem); }
+  .sk-bottom { bottom: clamp(1.4rem, 4vh, 2.4rem); }
+  .sk-mark { font-weight: 700; font-size: 17px; letter-spacing: .03em; }
+  .sk-meta, .sk-hint {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    opacity: .85;
+  }
+  .sk-hint::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: currentColor;
+    margin-right: 10px;
+    vertical-align: middle;
+    opacity: .6;
+  }
+
+  @media (max-width: 680px) {
+    .sk-hint { display: none; }
   }
 `;

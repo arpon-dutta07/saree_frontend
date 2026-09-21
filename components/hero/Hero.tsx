@@ -87,10 +87,10 @@ export default function Hero({ startAnimation = true }: HeroProps) {
           <HeroCTA />
         </motion.div>
 
-        {/* 6. Trust row — top: 63%, left: 13.5%, width: 40%, height: 4%, z-index 30 */}
+        {/* 6. Trust row — top: 63%, left: 13.5%, z-index 30 */}
         <motion.div
           variants={heroItemVariants}
-          style={{ position: "absolute", top: "63%", left: "13.5%", width: "40%", height: "4%", zIndex: 30, y: yHeadline }}
+          style={{ position: "absolute", top: "63%", left: "13.5%", zIndex: 30, y: yHeadline }}
         >
           <HeroTrustRow />
         </motion.div>

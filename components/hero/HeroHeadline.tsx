@@ -5,18 +5,12 @@ export default function HeroHeadline() {
     <div className="w-full h-full flex flex-col justify-between items-start text-left select-none">
       {/* Eyebrow */}
       <span className="font-sans text-[clamp(9px,0.95vw,13px)] tracking-[0.38em] uppercase text-[#FAF6F0]/85 font-medium leading-none pl-0.5">
-        SAREES WOVEN WITH
+        SAREES WOVEN BY
       </span>
 
       {/* Main Headline */}
-      <h1 className="font-serif text-[clamp(32px,5.2vw,78px)] font-normal text-[#FAF6F0] tracking-[0.06em] leading-[0.92] my-auto flex items-baseline">
-        <span>CULTU</span>
-        <span className="relative inline-block">
-          R
-          {/* Subtle flourish ligature */}
-          <span className="absolute -bottom-2 sm:-bottom-3 right-0 w-[1.5px] h-3.5 sm:h-4 bg-[#FAF6F0] rotate-[22deg] origin-top rounded-full pointer-events-none opacity-90" />
-        </span>
-        <span>E</span>
+      <h1 className="font-serif text-[clamp(34px,5.4vw,80px)] font-normal text-[#FAF6F0] tracking-[0.08em] leading-[0.92] my-auto flex items-baseline">
+        <span>Aarohi</span>
       </h1>
 
       {/* Ornamental Divider with Diamond */}

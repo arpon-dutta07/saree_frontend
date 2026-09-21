@@ -217,7 +217,7 @@ export default function SilkWeave() {
       }
       ctx.globalAlpha = 1;
 
-      // Headline woven into the silk: "AAROHI"
+      // Headline woven into the silk: "Aarohi"
       const cx = tw * 0.5;
       ctx.textAlign = "center";
       ctx.fillStyle = PALETTE.ink;
@@ -228,7 +228,7 @@ export default function SilkWeave() {
       ctx.fillText(spaced(KICKER), cx, th * 0.28);
       ctx.globalAlpha = 1;
 
-      // Main woven title: AAROHI
+      // Main woven title: Aarohi
       const fs = Math.round(tw * 0.13);
       ctx.font = `700 ${fs}px "Familjen Grotesk", sans-serif`;
       const lh = fs * 0.9;
@@ -243,6 +243,12 @@ export default function SilkWeave() {
 
       texture.needsUpdate = true;
     };
+
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        bake();
+      });
+    }
 
     const spaced = (s: string) => s.split("").join(" ");
 

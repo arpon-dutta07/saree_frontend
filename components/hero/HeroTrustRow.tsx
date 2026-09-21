@@ -35,17 +35,19 @@ export default function HeroTrustRow() {
   ];
 
   return (
-    <div className="w-full h-full flex items-center justify-between text-[#FAF6F0]/80 select-none">
+    <div className="inline-flex items-center gap-3 sm:gap-4 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#140306]/85 backdrop-blur-md border border-[#D4AF37]/50 shadow-[0_8px_25px_rgba(0,0,0,0.7)] select-none text-[#FAF6F0]">
       {items.map((item, index) => (
         <React.Fragment key={item.title}>
-          <div className="flex items-center gap-[0.4vw]">
-            <span className="text-[#D4AF37]/90">{item.icon}</span>
-            <span className="font-sans text-[clamp(8px,0.75vw,11px)] tracking-[0.18em] font-medium uppercase whitespace-nowrap">
+          <div className="flex items-center gap-2">
+            <span className="text-[#F3E5AB] drop-shadow-[0_1px_4px_rgba(212,175,55,0.7)]">
+              {item.icon}
+            </span>
+            <span className="font-sans text-[clamp(9px,0.75vw,11.5px)] tracking-[0.22em] font-semibold uppercase whitespace-nowrap text-[#FAF6F0] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
               {item.title}
             </span>
           </div>
           {index < items.length - 1 && (
-            <span className="text-[#FAF6F0]/25 text-[0.8vw]">|</span>
+            <span className="text-[#D4AF37]/60 text-xs">|</span>
           )}
         </React.Fragment>
       ))}

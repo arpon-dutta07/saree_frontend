@@ -10,6 +10,7 @@ import CorridorSection from "@/components/corridor/CorridorSection";
 import ContactSplitSection from "@/components/contact/ContactSplitSection";
 import ContactSection from "@/components/contact/ContactSection";
 import Footer from "@/components/footer/Footer";
+import ZariRibbonSeparator from "@/components/ribbon/ZariRibbonSeparator";
 
 const SilkWeave = dynamic(() => import("@/components/silk/SilkWeave"), {
   ssr: false,
@@ -22,12 +23,19 @@ export default function Home() {
     <main className="min-h-screen bg-[#140306] overflow-x-hidden">
       <VideoLoader onComplete={() => setHasCompletedIntro(true)} />
       <Hero startAnimation={hasCompletedIntro} />
+      <ZariRibbonSeparator />
       <NewArrivalsSection />
+      <ZariRibbonSeparator />
       <HeritageSection />
+      <ZariRibbonSeparator />
       <CorridorSection />
+      <ZariRibbonSeparator />
       <SilkWeave />
+      <ZariRibbonSeparator />
       <ContactSplitSection />
+      <ZariRibbonSeparator />
       <ContactSection />
+      <ZariRibbonSeparator />
       <Footer />
     </main>
   );

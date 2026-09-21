@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface ZariRibbonSeparatorProps {
   /** Direction of the ribbon flow. Defaults to "left-to-right" as requested by user. */
@@ -19,6 +20,17 @@ export default function ZariRibbonSeparator({
   heightClass = "h-[72px] sm:h-[84px] md:h-[96px] lg:h-[104px]",
   className = "",
 }: ZariRibbonSeparatorProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+  const scrollShift = useTransform(
+    scrollYProgress,
+    [0, 1],
+    direction === "left-to-right" ? ["-80px", "80px"] : ["80px", "-80px"]
+  );
+
   // Tile aspect ratio: 1376px / 448px = 3.0714
   // At height 104px, one tile is ~320px wide.
   // 16 tiles per segment = ~5120px width per segment, easily covering 4K screens (3840px) with zero gaps.
@@ -29,6 +41,7 @@ export default function ZariRibbonSeparator({
 
   return (
     <div
+      ref={containerRef}
       role="separator"
       aria-label="Royal Banarasi Saree Zari Ribbon Border"
       className={`relative w-full overflow-hidden bg-[#2D060C] select-none border-y-2 border-[#D4AF37]/70 shadow-[0_6px_25px_rgba(20,3,6,0.6)] z-20 ${heightClass} ${className}`}
@@ -40,14 +53,15 @@ export default function ZariRibbonSeparator({
       {/* 2. Velvet woven silk ambient sheen overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/30 pointer-events-none z-10" />
 
-      {/* 3. GPU-accelerated Infinite Moving Ribbon Track */}
-      <div
-        className={`flex items-center h-full will-change-transform ${animClass}`}
-        style={{
-          width: "max-content",
-          animationDuration: `${duration}s`,
-        }}
-      >
+      {/* 3. Scroll velocity + GPU-accelerated Infinite Moving Ribbon Track */}
+      <motion.div style={{ x: scrollShift }} className="h-full w-max">
+        <div
+          className={`flex items-center h-full will-change-transform ${animClass}`}
+          style={{
+            width: "max-content",
+            animationDuration: `${duration}s`,
+          }}
+        >
         {/* Strip Segment 1 */}
         <div className="flex items-center h-full flex-shrink-0">
           {tiles.map((_, i) => (
@@ -83,7 +97,8 @@ export default function ZariRibbonSeparator({
             />
           ))}
         </div>
-      </div>
+        </div>
+      </motion.div>
 
       <style jsx global>{`
         @keyframes zariFlowLtr {

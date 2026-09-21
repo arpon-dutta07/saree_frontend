@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { EditorialTitleReveal, EditorialBlockReveal } from "@/components/motion/ScrollReveal";
 
 interface SareeItem {
   id: string;
@@ -93,13 +94,14 @@ const editorialVariants = {
 };
 
 const cardCascadeVariants = {
-  hidden: { opacity: 0, y: 45 },
+  hidden: { opacity: 0, y: 36, scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.9,
-      delay: 0.2 + i * 0.12,
+      duration: 0.85,
+      delay: 0.15 + i * 0.12,
       ease: luxuryEase,
     },
   }),
@@ -262,11 +264,13 @@ export default function NewArrivalsSection() {
               </div>
 
               {/* Main Headline */}
-              <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#2A0C14] leading-[1.08] tracking-[0.02em]">
-                Fresh Weaves,
-                <br />
-                <span className="italic font-light">Timeless Grace</span>
-              </h2>
+              <EditorialTitleReveal>
+                <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#2A0C14] leading-[1.08] tracking-[0.02em]">
+                  Fresh Weaves,
+                  <br />
+                  <span className="italic font-light">Timeless Grace</span>
+                </h2>
+              </EditorialTitleReveal>
 
               {/* Decorative Divider */}
               <div className="w-[45%] h-[1px] bg-gradient-to-r from-[#A47148]/60 via-[#A47148]/30 to-transparent flex items-center">

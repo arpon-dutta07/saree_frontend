@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { EditorialTitleReveal } from "@/components/motion/ScrollReveal";
 
 interface SareeItem {
   id: string;
@@ -88,13 +89,14 @@ const editorialVariants = {
 };
 
 const cardCascadeVariants = {
-  hidden: { opacity: 0, y: 45 },
+  hidden: { opacity: 0, y: 36, scale: 0.96 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.9,
-      delay: 0.18 + i * 0.12,
+      duration: 0.85,
+      delay: 0.15 + i * 0.12,
       ease: luxuryEase,
     },
   }),
@@ -347,11 +349,13 @@ export default function HeritageSection() {
               </div>
 
               {/* Main Headline */}
-              <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#FAF6F0] leading-[1.08] tracking-[0.02em]">
-                Royal Drapes,
-                <br />
-                <span className="italic font-light text-[#FAF6F0]/90">Eternal Majesty</span>
-              </h2>
+              <EditorialTitleReveal>
+                <h2 className="font-serif text-[clamp(28px,3.1vw,46px)] font-normal text-[#FAF6F0] leading-[1.08] tracking-[0.02em]">
+                  Royal Drapes,
+                  <br />
+                  <span className="italic font-light text-[#FAF6F0]/90">Eternal Majesty</span>
+                </h2>
+              </EditorialTitleReveal>
 
               {/* Decorative Divider */}
               <div className="w-[45%] h-[1px] bg-gradient-to-r from-[#FAF6F0]/60 via-[#FAF6F0]/30 to-transparent flex items-center">

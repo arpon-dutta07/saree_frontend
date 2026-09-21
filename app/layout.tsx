@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat, Inter } from "next/font/google";
 import "./globals.css";
+import SmoothScrollProvider from "@/components/motion/SmoothScrollProvider";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -44,7 +45,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${montserrat.variable} ${inter.variable}`}>
       <body className="antialiased min-h-screen bg-[#140306] text-[#FAF6F0]">
-        {children}
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
       </body>
     </html>
   );

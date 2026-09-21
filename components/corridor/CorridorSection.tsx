@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { EditorialTitleReveal, EditorialBlockReveal } from "@/components/motion/ScrollReveal";
 
 /* ────────────────────────────────────────────────────────────────────────
    3D Saree Corridor Hero Section — "Stories in Drapes"
@@ -73,11 +75,18 @@ function computeCorridorKeyframes() {
 
 export default function CorridorSection() {
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const textParallax = useTransform(scrollYProgress, [0, 1], ["20px", "-20px"]);
 
   const { rightRules, leftRules } = useMemo(() => computeCorridorKeyframes(), []);
 
   return (
     <section
+      ref={sectionRef}
       id="corridor"
       aria-label="3D Saree Corridor"
       className="relative w-full h-[100svh] min-h-[720px] overflow-hidden bg-[#FBF7F0] select-none [container-type:inline-size]"
@@ -233,7 +242,10 @@ export default function CorridorSection() {
       </div>
 
       {/* 4. Central Main Editorial Content (In Front of Cards, Centered Horizontally & Vertically) */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-6 text-center">
+      <motion.div
+        style={{ y: textParallax }}
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30 px-6 text-center"
+      >
         {/* Luminous Warm Aura behind Headline for 100% Contrast & Legibility */}
         <div
           className="absolute w-[85vw] max-w-[1020px] h-[70vh] max-h-[520px] rounded-full pointer-events-none -z-10"
@@ -254,11 +266,13 @@ export default function CorridorSection() {
         </div>
 
         {/* Main Heading */}
-        <h2 className="font-serif text-[clamp(44px,6.8vw,104px)] font-normal text-[#1E0409] tracking-[-0.04em] leading-[0.92] max-w-[960px] drop-shadow-sm select-text">
-          Every drape tells
-          <br />
-          <span className="italic font-light text-[#4A101D]">an eternal story.</span>
-        </h2>
+        <EditorialTitleReveal>
+          <h2 className="font-serif text-[clamp(44px,6.8vw,104px)] font-normal text-[#1E0409] tracking-[-0.04em] leading-[0.92] max-w-[960px] drop-shadow-sm select-text">
+            Every drape tells
+            <br />
+            <span className="italic font-light text-[#4A101D]">an eternal story.</span>
+          </h2>
+        </EditorialTitleReveal>
 
         {/* CTA Button */}
         <div className="mt-8 pointer-events-auto">
@@ -280,7 +294,7 @@ export default function CorridorSection() {
             </svg>
           </a>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
